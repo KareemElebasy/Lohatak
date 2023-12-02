@@ -4,7 +4,6 @@
       <div>
         <img src="~assets/images/expression.svg" alt="" />
       </div>
-
       <div class="m-auto p-4">
         <h3 class="font-bold text-3xl pb-4">اجعل لوحتك تعبر عن شخصيتك</h3>
         <p class="text-text-gray text-base pb-4 w-2/3">

@@ -46,13 +46,13 @@
     <button @click="openToast" class="main_btn px-2 py-1">toast</button>
   </div>
 
-  <div class="container">
+  <!-- <div class="container">
     <button @click="openModal" class="main_btn px-2 py-1">OpenConfirm</button>
 
     <div v-if="showModal">
       <ModalConfirm @close="closeModal"></ModalConfirm>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
