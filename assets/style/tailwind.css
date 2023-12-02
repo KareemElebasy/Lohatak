@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "DIN Next LT Arabic";
+}
+
+/* width */
+::-webkit-scrollbar {
+  @apply w-1;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-lg;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary;
+}
+
+@font-face {
+  font-family: "DIN Next LT Arabic";
+  src: url(../fonts/DINNextLTArabic-Regular.ttf);
+}
+
+.main_btn {
+  color: white;
+  background-color: #1dc370;
+  border-radius: 0.5rem;
+}
+.not_active_btn {
+  @apply bg-white text-text-gray rounded-2xl px-6 py-4;
+}
+.active_btn {
+  @apply text-white bg-primary opacity-30 rounded-2xl px-6 py-4 border-2 border-primary;
+}
+
+.bg-gray {
+  @apply bg-gradient-to-l from-gray-100 to-gray-50;
+}
