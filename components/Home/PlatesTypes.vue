@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <button @click="openToast" class="main_btn px-2 py-1">toast</button>
+    <!-- <button @click="openToast" class="main_btn px-2 py-1">toast</button> -->
   </div>
 
   <!-- <div class="container">
