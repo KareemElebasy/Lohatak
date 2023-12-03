@@ -315,7 +315,7 @@ function onSubmit(e, actions) {
   }
 
   input:checked {
-    & ~ input {
+    input {
       @apply bg-primary;
     }
     & ~ label {

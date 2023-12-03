@@ -1,7 +1,6 @@
 <template>
   <div class="bg-gradient-to-l from-gray-100 to-gray-50">
     <div class="container pt-12 pb-12">
-      
       <div class="text-center md:w-1/2 mx-auto">
         <h2 class="text-black font-bold text-2xl pb-2">اللوحات</h2>
         <p class="text-text-gray">

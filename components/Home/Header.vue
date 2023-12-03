@@ -34,7 +34,7 @@
           class="swiper-wraper bg-cover bg-no-repeat bg-center bg-fixed"
           :style="`background-image: url('https://i.postimg.cc/K8ZvJsLR/Rectangle-1.png');`"
         >
-          <div class="container h-[100vh] flex items-center">
+          <div class="container h-[60vh] md:h-[100vh]  flex items-center">
             <div class="md:w-2/5">
               <h2
                 class="text-primary md:text-start text-center font-bold text-5xl mb-6"
