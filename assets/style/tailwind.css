@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   @apply font-poppins;
   overflow-x: hidden;
@@ -193,5 +192,16 @@ body[dir="rtl"] {
 }
 
 .bg-gray {
+  @apply bg-gradient-to-l from-gray-100 to-gray-50;
+}
+.bg-auth {
+  background-image: url("../../assets/images/bg-auth.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-position: center;
+}
+
+.bg-gradient {
   @apply bg-gradient-to-l from-gray-100 to-gray-50;
 }

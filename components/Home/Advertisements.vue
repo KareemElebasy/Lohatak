@@ -51,10 +51,10 @@
   display: block;
   width: 100%;
 }
-.swiper-slide-prev {
-  @apply w-1/5  h-[150px];
+.swiper-slide .swiper-slide-next {
+  @apply min-h-[250px];
 }
-.swiper-slide-next {
+.swiper-slide .swiper-slide-prev {
   @apply w-1/5  h-[150px];
 }
 .ads-section {

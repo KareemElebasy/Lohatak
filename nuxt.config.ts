@@ -29,6 +29,24 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "nuxt-swiper",
     [
+      "nuxt-primevue",
+      {
+        primevue: {
+          options: {
+            ripple: true,
+          },
+          components: {
+            include: [
+              "Button",
+              "Calendar",
+              "Dialog",
+            ],
+          },
+        },
+      },
+    ],
+
+    [
       "@nuxtjs/i18n",
       {
         locales: [
@@ -71,6 +89,7 @@ export default defineNuxtConfig({
         },
       },
     ],
+    "@nuxt/image",
   ],
   plugins: ["~/plugins/vue-toastification.client", "~/plugins/i18n.client.ts"],
   build: {

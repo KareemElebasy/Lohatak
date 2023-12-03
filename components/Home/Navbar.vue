@@ -52,8 +52,8 @@
           </li>
 
           <li>
-            <nuxt-link :to="localePath('/contact-us')">{{
-              $t("NAV.contact")
+            <nuxt-link :to="localePath('/add-advertisement')">{{
+              $t("NAV.add-advertisement")
             }}</nuxt-link>
           </li>
         </ul>

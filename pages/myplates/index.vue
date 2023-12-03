@@ -34,7 +34,9 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2 py-6">
-          <div class="hidden md:block md:col-span-1">1</div>
+          <div class="hidden md:block md:col-span-1">
+            <GeneralFiltersCard />
+          </div>
           <div class="md:col-span-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
               <MyPlatesCard v-for="item in 8" />

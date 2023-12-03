@@ -1,7 +1,10 @@
 <template>
   <Html :lang="$i18n.locale">
-    <div class="flex flex-col min-h-[100vh]">
-      <slot />
+    <div class="flex flex-col min-h-[100vh] bg-auth">
+      <div class="my-6">
+        <slot />
+
+      </div>
     </div>
   </Html>
 </template>

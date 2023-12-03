@@ -5,9 +5,10 @@
     "en": "عربي"
   },
   "NAV": {
-    "name" :"Lohtak",
+    "name": "Lohtak",
     "home": "Home",
     "search": "Search for One",
+    "add-advertisement": "Add Advertisement",
     "myplates": "My Plates",
     "blog": "Blog",
     "contact": "Contact",
@@ -22,16 +23,15 @@
   "TITLES": {
     "description3": "We have gathered strong experience in creating cutting-edge web applications."
   },
-  "PROFILE":{
+  "PROFILE": {
     "chat": "Chats",
     "favs": "Favs",
-    "privacy":"Privacy Policy ",
-    "terms":"Terms",
+    "privacy": "Privacy Policy ",
+    "terms": "Terms",
     "bankaccount": "Bank Account",
     "shared": "Location Shared",
-    "contact":"Contact Us",
-    "logout":"Log Out"
-
+    "contact": "Contact Us",
+    "logout": "Log Out"
   },
   "Subtitle": {
     "blog": "Blog"
@@ -53,6 +53,7 @@
     "sendRequest": "Send Request",
     "subscribe": "Subscribe",
     "send": "Send",
+    "search": "Search",
     "confirm": "Confirm",
     "edit": "Edit",
     "delete": "Delete",
@@ -66,7 +67,14 @@
   },
   "FORMS": {
     "Placeholders": {
-      "name": "Name",
+      "name": "Full Name",
+      "userId": "Your Id Number",
+      "gender": "Gender",
+      "price": "Price",
+      "detailsAds": "Advertisement Details (Optional)",
+      "addressAds": "Advertisement Address",
+
+      "nationality": "Nationality",
       "searchBlog": "Search Blog",
       "selectService": "Select Service",
       "selectBudget": "Select Budget",
