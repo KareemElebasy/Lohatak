@@ -1,12 +1,17 @@
 <template>
   <div class="ads-section p-3">
     <div class="container">
-      <div class="text-white text-center">
+      <div class="text-white text-center my-8">
         <h2 class="text-3xl font-bold pb-2">الإعلانات</h2>
         <p class="text-base">تابع افضل العروض والإعلانات</p>
       </div>
       <Swiper
-        :modules="[SwiperEffectCoverflow, SwiperPagination]"
+        :modules="[SwiperEffectCoverflow, SwiperNavigation]"
+        :autoplay="{
+          delay: 5000,
+          disableOnInteraction: true,
+        }"
+        :navigation="true"
         :grabCursor="true"
         :center="true"
         :breakpoints="{
@@ -39,25 +44,39 @@
 
 <style lang="scss" scoped>
 .swiper {
-  //   width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
-.swiper-slide {
-  @apply w-3/5 h-[300px];
-}
-.swiper-slide img {
-  display: block;
   width: 100%;
+  // padding-bottom: 100px;
+  .swiper-slide {
+    img {
+      @apply block w-full my-auto;
+    }
+    .swiper-slide-active {
+      img {
+        @apply w-3/5;
+      }
+    }
+    .swiper-slide-prev {
+      img {
+        @apply w-3/5 h-10;
+      }
+    }
+    .swiper-slide-next {
+      img {
+        @apply w-3/5 h-10;
+      }
+    }
+  }
 }
-.swiper-slide .swiper-slide-next {
-  @apply min-h-[250px];
-}
-.swiper-slide .swiper-slide-prev {
-  @apply w-1/5  h-[150px];
+.swiper-rtl {
+  .swiper-button-prev {
+    @apply text-white border-2 border-white rounded-2xl px-16 py-6 m-20;
+  }
+  .swiper-button-next {
+    @apply text-white border-2 border-white rounded-2xl px-16 py-6 m-20;
+  }
 }
 .ads-section {
+  padding: 50px 0;
   background-image: url("../../assets/images/bg-ads.svg");
   background-size: cover;
   background-repeat: no-repeat;

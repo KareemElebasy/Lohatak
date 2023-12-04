@@ -128,7 +128,7 @@
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
       >
-        <GeneralCard v-for="item in 6" />
+        <GeneralCard v-for="item in 6" class="mx-auto" />
       </div>
     </div>
   </div>

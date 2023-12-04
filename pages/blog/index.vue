@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-gradient">
     <GeneralTitleHeader
       :title="'اللوحات'"
       :desc="`جميع المداونات التي علي المنصة`"

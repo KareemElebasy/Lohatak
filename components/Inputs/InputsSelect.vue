@@ -9,6 +9,7 @@
       <Dropdown
         v-bind="field"
         :options="options"
+        :selected="options[0]"
         :placeholder="placeholder"
         optionLabel="name"
         optionValue="name"
@@ -30,6 +31,7 @@
 import Dropdown from "primevue/dropdown";
 
 const currentValue = ref(null);
+
 defineProps({
   options: {
     required: true,

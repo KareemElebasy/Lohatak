@@ -2,8 +2,8 @@
   <div class="bg-white p-2 rounded-lg pt-4">
     <div>
       <h4 class="text-base font-bold">بحث اللوحات</h4>
-      <div class="flex flex-col pb-5">
-        <label for="nums" class="py-6 font-medium">أرقام</label>
+      <div class="flex flex-col pb-">
+        <label for="nums" class="py-4 font-medium">أرقام</label>
         <select
           id="nums"
           name="numslist"
@@ -17,7 +17,7 @@
         </select>
       </div>
       <div class="flex flex-col pb-5">
-        <label for="chars" class="py-6 font-medium">حروف</label>
+        <label for="chars" class="py-4 font-medium">حروف</label>
         <select
           id="chars"
           name="charslist"
@@ -36,52 +36,74 @@
       <h4 class="text-base font-bold pb-3">الترتيب حسب</h4>
       <div>
         <h4 class="text-sm font-bold pb-4">وقت التصدير</h4>
-        <div
-          class="mb-4 flex items-center justify-between p-2 border border-gray-200 rounded-md"
-        >
-          <label
-            class="inline-block hover:cursor-pointer text-gray"
-            for="item.key"
-          >
-            الأقدم
+        <div class="options-types">
+          <input
+            id="oldest"
+            type="radio"
+            value="oldest"
+            name="oldest"
+            class="hidden"
+            v-model="timeSort"
+          />
+          <label for="oldest">
+            <div>
+              <p>الأحدث</p>
+              <i class="fa-regular fa-circle-dot text-primary"></i>
+            </div>
           </label>
-          <input type="radio" value="item.key" id="item.key" />
         </div>
-        <div
-          class="mb-4 flex items-center justify-between p-2 border border-gray-200 rounded-md"
-        >
-          <label
-            class="inline-block hover:cursor-pointer text-gray"
-            for="item.key"
-          >
-            الأحدث
+
+        <div class="options-types">
+          <input
+            id="newest"
+            type="radio"
+            value="newest"
+            name="newest"
+            class="hidden"
+            v-model="timeSort"
+          />
+          <label for="newest">
+            <div>
+              <p>الأقدم</p>
+              <i class="fa-regular fa-circle-dot text-primary"></i>
+            </div>
           </label>
-          <input type="radio" value="item.key" id="item.key" />
         </div>
       </div>
       <div>
         <h4 class="text-sm font-bold pb-4">القيمة السعرية</h4>
-        <div
-          class="mb-4 flex items-center justify-between p-2 border border-gray-200 rounded-md"
-        >
-          <label
-            class="inline-block hover:cursor-pointer text-gray"
-            for="item.key"
-          >
-            الأعلى سعرا
+        <div class="options-types">
+          <input
+            id="abovePriced"
+            type="radio"
+            value="abovePriced"
+            name="abovePriced"
+            class="hidden"
+            v-model="priceSort"
+          />
+          <label for="abovePriced">
+            <div>
+              <p>الأعلي سعرا</p>
+              <i class="fa-regular fa-circle-dot text-primary"></i>
+            </div>
           </label>
-          <input type="radio" value="item.key" id="item.key" />
         </div>
-        <div
-          class="mb-4 flex items-center justify-between p-2 border border-gray-200 rounded-md"
-        >
-          <label
-            class="inline-block hover:cursor-pointer text-gray"
-            for="item.key"
-          >
-            الأقل سعرا
+
+        <div class="options-types">
+          <input
+            id="lowPrice"
+            type="radio"
+            value="lowPrice"
+            name="lowPrice"
+            class="hidden"
+            v-model="priceSort"
+          />
+          <label for="lowPrice">
+            <div>
+              <p>الأقل سعرا</p>
+              <i class="fa-regular fa-circle-dot text-primary"></i>
+            </div>
           </label>
-          <input type="radio" value="item.key" id="item.key" />
         </div>
       </div>
     </div>
@@ -89,6 +111,39 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const priceSort = ref(null);
+const timeSort = ref(null);
+</script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.options-types {
+  input {
+    & ~ label {
+      @apply block border text-sm font-medium border-gray-300 w-full min-h-[3rem] rounded-md px-6 py-1 my-1;
+      div {
+        @apply flex justify-between items-center min-h-[2rem];
+      }
+
+      i {
+        @apply text-gray-100;
+      }
+    }
+  }
+
+  input:checked {
+    & ~ label {
+      @apply border-primary;
+      div {
+        @apply flex justify-between items-center min-h-[2rem];
+      }
+      i {
+        @apply text-primary;
+      }
+    }
+  }
+  // input [type="radio"] {
+  //   @apply accent-black
+  // }
+}
+</style>

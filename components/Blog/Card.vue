@@ -1,8 +1,8 @@
 <template>
   <div
-    class="bg-white w-full flex flex-col rounded-[3rem] h-full pb-5 border m-auto"
+    class="bg-white w-full flex flex-col rounded-t-[2.5rem] rounded-b-2xl h-full pb-5 m-auto"
   >
-    <div class="w-[100%]">
+    <div class="w-full">
       <img
         src="~assets/images/blog1.svg"
         alt="motawefy-hogag"

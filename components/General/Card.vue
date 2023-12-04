@@ -1,5 +1,7 @@
 <template>
-  <div class="plateCard p-4 bg-white flex flex-col rounded-lg min-w-[230px]">
+  <div
+    class="plateCard p-4 bg-white flex flex-col rounded-lg min-w-[14rem] max-w-[20rem] mx-auto"
+  >
     <div class="flex items-center justify-between pb-4">
       <button>
         <i class="fa-regular fa-heart text-primary mx-1"></i>

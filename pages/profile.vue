@@ -1,15 +1,35 @@
 <template>
-  <div>
+  <div class="bg-gradient">
     <GeneralTitleHeader
       :title="`الحساب الشخصي`"
       :desc="`بيانات الحساب الشخصي الخاصة بك`"
     />
   </div>
   <div class="container mx-auto">
+    <div class="block" @click="toggleSideBar">
+      <button class="relative group p-2">
+        <div
+          class="relative flex items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-700 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md"
+        >
+          <div
+            class="flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-300 group-focus:-rotate-[45deg] origin-center"
+          >
+            <div
+              class="bg-primary h-[2px] w-1/2 rounded transform transition-all duration-300 group-focus:-rotate-90 group-focus:h-[1px] origin-right delay-75 group-focus:-translate-y-[1px]"
+            ></div>
+            <div class="bg-primary h-[1px] rounded"></div>
+            <div
+              class="bg-primary h-[2px] w-1/2 rounded self-end transform transition-all duration-300 group-focus:-rotate-90 group-focus:h-[1px] origin-left delay-75 group-focus:translate-y-[1px]"
+            ></div>
+          </div>
+        </div>
+      </button>
+    </div>
     <div class="grid md:grid-cols-12 gap-5">
-      <div class="hidden md:block col-span-4 mt-4 p-2">
+      
+      <div class="hidden md:block col-span-4 mt-4 p-2" >
         <div class="pt-2 flex flex-col gap-2">
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-regular fa-user bg-gray-400 text-white p-2 rounded-full"
@@ -22,7 +42,7 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-regular fa-heart bg-gray-400 text-white p-2 rounded-full"
@@ -35,7 +55,7 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-regular fa-comment-dots bg-gray-400 text-white p-2 rounded-full"
@@ -50,7 +70,7 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between items-center">
+          <div class="flex justify-between items-center isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-regular fa-bell bg-gray-400 text-white p-2 rounded-full"
@@ -71,7 +91,7 @@
               </label>
             </div>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-solid fa-shield-halved bg-gray-400 text-white p-2 rounded-full"
@@ -86,7 +106,7 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-solid fa-shield-halved bg-gray-400 text-white p-2 rounded-full"
@@ -101,13 +121,13 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-solid fa-building-columns bg-gray-400 text-white p-2 rounded-full"
               ></i>
               <nuxt-link
-                :to="localePath('/profile/orders')"
+                :to="localePath('/profile/bankaccounts')"
                 class="text-small"
                 >{{ $t("PROFILE.bankaccount") }}</nuxt-link
               >
@@ -116,13 +136,13 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-solid fa-share-nodes bg-gray-400 text-white p-2 rounded-full"
               ></i>
               <nuxt-link
-                :to="localePath('/profile/orders')"
+                :to="localePath('/profile/shared')"
                 class="text-small"
                 >{{ $t("PROFILE.shared") }}</nuxt-link
               >
@@ -131,13 +151,13 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-solid fa-phone-flip bg-gray-400 text-white p-2 rounded-full"
               ></i>
               <nuxt-link
-                :to="localePath('/profile/orders')"
+                :to="localePath('/profile/contact-us')"
                 class="text-small"
                 >{{ $t("PROFILE.contact") }}</nuxt-link
               >
@@ -146,42 +166,20 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
                 class="fa-regular fa-user bg-gray-400 text-white p-1 rounded-full"
               ></i>
-              <nuxt-link
-                :to="localePath('/profile/orders')"
-                class="text-small"
-                >{{ $t("PROFILE.logout") }}</nuxt-link
-              >
+              <nuxt-link :to="localePath('/')" class="text-small">{{
+                $t("PROFILE.logout")
+              }}</nuxt-link>
             </div>
             <i
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
         </div>
-      </div>
-
-      <div class="md:hidden block">
-        <button class="relative group p-2">
-          <div
-            class="relative flex items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-700 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md"
-          >
-            <div
-              class="flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-300 group-focus:-rotate-[45deg] origin-center"
-            >
-              <div
-                class="bg-primary h-[2px] w-1/2 rounded transform transition-all duration-300 group-focus:-rotate-90 group-focus:h-[1px] origin-right delay-75 group-focus:-translate-y-[1px]"
-              ></div>
-              <div class="bg-primary h-[1px] rounded"></div>
-              <div
-                class="bg-primary h-[2px] w-1/2 rounded self-end transform transition-all duration-300 group-focus:-rotate-90 group-focus:h-[1px] origin-left delay-75 group-focus:translate-y-[1px]"
-              ></div>
-            </div>
-          </div>
-        </button>
       </div>
 
       <div class="col-span-12 md:col-span-8 p-2 bg-gray">
@@ -193,4 +191,26 @@
 
 <script setup>
 const localePath = useLocalePath();
+const route = useRoute();
+
+const showSidebar = ref(false);
+
+const toggleSideBar = () => {
+  showSidebar.value = true;
+};
+watch(
+  () => route.path,
+  () => {
+    toggleSideBar();
+  }
+);
 </script>
+
+<style lang="scss">
+.router-link-exact-active {
+  & ~ i {
+    @apply bg-primary text-black;
+  }
+  @apply text-primary;
+}
+</style>

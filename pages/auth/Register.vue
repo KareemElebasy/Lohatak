@@ -113,20 +113,17 @@ const toast = useToast();
 const config = useRuntimeConfig();
 const i18n = useI18n();
 const schema = yup.object({
-  phone: yup.string().required(i18n.t("FORMS.Validation.phone")),
-  name: yup.string().required(i18n.t("FORMS.Validation.name")),
-  phone_code: yup.mixed().required(),
+  price: yup.string().required(i18n.t("FORMS.Validation.name")),
 });
-
+const price = ref(null);
 const phone_code = ref(null);
 const btnLoading = ref(false);
-const password = ref(true);
 function onSubmit(e, actions) {
+  
   btnLoading.value = true;
 
   const SUBMITDATA = new FormData();
-  SUBMITDATA.append("phone", e.phone);
-  SUBMITDATA.append("phone_code", e.phone_code);
+  SUBMITDATA.append("price", e.price);
   $fetch("contact", {
     method: "POST",
     body: SUBMITDATA,
