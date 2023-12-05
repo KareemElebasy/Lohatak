@@ -77,6 +77,7 @@
         class="text-red-500 text-sm"
       />
     </VeeField>
+
     <VeeField type="phone" name="phone" v-slot="{ field, meta }">
       <div
         class="input_wrapper flex-1 flex-col mb-0"
@@ -105,8 +106,9 @@ import { useField } from "vee-validate";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 
 const phoneCode = useField("phone_code");
+
+console.log(phoneCode);
 // import Dropdown from "primevue/dropdown";
-import { ref } from "vue";
 defineProps({
   placeholder: {
     required: true,
