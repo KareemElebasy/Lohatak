@@ -54,12 +54,12 @@
                   :type="'text'"
                   :placeholder="$t('FORMS.Placeholders.name')"
                 />
-                {{ date_of_birth.toLocaleDateString("en-US") }}
+                {{ date_of_birth }}
                 <div class="font-light border p-4 border-opacity-10 rounded-xl">
                   <VeeField
                     name="date_of_birth"
                     v-model="date_of_birth"
-                    v-slot="{ field }"
+                    v-slot="{ field, meta }"
                   >
                     <div>
                       <Calendar
@@ -69,6 +69,12 @@
                         inputId="date_of_birth"
                       />
                     </div>
+                    <VeeErrorMessage
+                      v-if="!meta.valid && meta.touched"
+                      name="date_of_birth"
+                      as="div"
+                      class="error"
+                    />
                   </VeeField>
                 </div>
                 <div>
@@ -78,9 +84,9 @@
                   :label="$t('FORMS.Placeholders.userId')"
                   :id="`ID_number`"
                   :name="`ID_number`"
+                  :type="'text'"
                   :placeholder="$t('FORMS.Placeholders.userId')"
                 />
-
                 <div class="flex items-center justify-between">
                   <InputsSelect
                     class="w-fit"
@@ -151,10 +157,13 @@ const i18n = useI18n();
 const schema = yup.object({
   phone: yup.string().required(i18n.t("FORMS.Validation.phone")),
   username: yup.string().required(i18n.t("FORMS.Validation.name")),
-  // date_of_birth: yup.string().required(i18n.t("FORMS.Validation.name")),
-  // phone_code: yup.mixed().required(),
-  // ID_number: yup.string().required(i18n.t("FORMS.Validation.ID_number")),
-  // gender: yup.required(i18n.t("FORMS.Validation.gender")),
+  date_of_birth: yup
+    .string()
+    .required(i18n.t("FORMS.Validation.date_of_birth")),
+  phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code ")),
+  ID_number: yup.string().required(i18n.t("FORMS.Validation.ID_number")),
+  gender: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
+  city: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
 });
 
 const phone_code = ref(null);
@@ -163,50 +172,50 @@ const date_of_birth = ref(null);
 const btnLoading = ref(false);
 function onSubmit(e, actions) {
   btnLoading.value = true;
-
   const SUBMITDATA = new FormData();
-  console.log(e.date_of_birth);
+  const date_of_birth_formated = e.date_of_birth.toISOString().slice(0, 10);
   console.log(e);
   SUBMITDATA.append("username", e.username);
-  SUBMITDATA.append("phone_code", e.phone_code);
+  SUBMITDATA.append("phone_code", e.phone_code.value);
   SUBMITDATA.append("phone", e.phone);
   SUBMITDATA.append("gender", e.gender.value);
-  SUBMITDATA.append("city", e.city.value);
-
-  // let birth = ref("");
-  // birth.value = e.date_of_birth.toISOString.slice(0, 10);
-  SUBMITDATA.append("date_of_birth", e.date_of_birth);
+  SUBMITDATA.append("city_id", e.city.value);
+  SUBMITDATA.append("ID_number", e.ID_number);
+  SUBMITDATA.append("date_of_birth", date_of_birth_formated);
   console.log(SUBMITDATA);
-  // $fetch("contact", {
-  //   method: "POST",
-  //   body: SUBMITDATA,
-  //   baseURL: config.public.baseURL,
-  //   headers: {
-  //     "Accept-Language": i18n.locale.value,
-  //   },
-  // })
-  //   .then((res) => {
-  //     btnLoading.value = false;
+  $fetch("api/client_web/register", {
+    method: "POST",
+    body: SUBMITDATA,
+    baseURL: config.public.baseURL,
+    headers: {
+      "Accept-Language": i18n.locale.value,
+    },
+  })
+    .then((res) => {
+      btnLoading.value = false;
+      actions.resetForm();
+      toast.success(res.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+      useCookie("phone").value = e.phone;
+      useCookie("phone_code").value = e.phone_code.value;
 
-  //     actions.resetForm();
-  //     toast.success(res.message, {
-  //       timeout: 2000,
-  //       position:
-  //         i18n.locale.value == "en"
-  //           ? POSITION.BOTTOM_RIGHT
-  //           : POSITION.BOTTOM_LEFT,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     btnLoading.value = false;
-  //     toast.error(err.response._data.message, {
-  //       timeout: 2000,
-  //       position:
-  //         i18n.locale.value == "en"
-  //           ? POSITION.BOTTOM_RIGHT
-  //           : POSITION.BOTTOM_LEFT,
-  //     });
-  //   });
+      navigateTo("/auth/verify");
+    })
+    .catch((err) => {
+      btnLoading.value = false;
+      toast.error(err.response._data.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+    });
 }
 </script>
 <style lang="scss">

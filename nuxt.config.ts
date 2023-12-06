@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-
+  ssr: false,
+  spaLoadingTemplate: false,
   app: {
     // Start:: Head Configurations //
     head: {
@@ -36,11 +36,7 @@ export default defineNuxtConfig({
             ripple: true,
           },
           components: {
-            include: [
-              "Button",
-              "Calendar",
-              "Dialog",
-            ],
+            include: ["Button", "Calendar", "Dialog"],
           },
         },
       },
@@ -69,10 +65,9 @@ export default defineNuxtConfig({
         langDir: "locales/",
         defaultLocale: "ar",
         detectBrowserLanguage: false,
-
-        precompile: {
-          strictMessage: false,
-        },
+        // precompile: {
+        //   strictMessage: false,
+        // },
         vueI18nLoader: true,
       },
     ],
@@ -89,10 +84,25 @@ export default defineNuxtConfig({
         },
       },
     ],
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: [
+          // automatically imports `defineStore`
+          "defineStore", // import { defineStore } from 'pinia'
+          ["defineStore", "definePiniaStore"], // import { defineStore as definePiniaStore } from 'pinia'
+        ],
+      },
+    ],
     "@nuxt/image",
   ],
   plugins: ["~/plugins/vue-toastification.client", "~/plugins/i18n.client.ts"],
   build: {
     transpile: ["vue-toastification"],
+  },
+  runtimeConfig: {
+    public: {
+      baseURL: "http://lohatk.phpv8.aait-d.com/public/",
+    },
   },
 });

@@ -6,6 +6,7 @@ export default defineNuxtPlugin(app => {
       document.documentElement.setAttribute('lang', "ar")
       document.body.setAttribute("dir", "rtl");
     }
+    
     app.$i18n.onLanguageSwitched = (oldLocale: string, newLocale: string) => {
   
       if (app.$i18n.locale.value == "en") {

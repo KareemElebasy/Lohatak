@@ -5,15 +5,6 @@
     >
       <nuxt-link :to="localePath('/')">
         <img
-          v-if="$route.path == '/' || ($route.path == '/ar' && !scrolled)"
-          src="~/assets/images/logo.svg"
-          alt="logo"
-          width="71"
-          height="37"
-          loading="lazy"
-        />
-        <img
-          v-else
           src="~/assets/images/logo.svg"
           alt="logo"
           width="71"

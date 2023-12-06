@@ -5,9 +5,7 @@
         <nuxt-link class="block pb-4" :to="localePath('/')">
           <img class="w-fit" src="~assets/images/logo1.svg" alt="" />
         </nuxt-link>
-        <div
-          class="w-full max-w-[600px] rounded-[25px] px-8 pt-6 pb-8"
-        >
+        <div class="w-full max-w-[600px] rounded-[25px] px-8 pt-6 pb-8">
           <h5 class="text-lg pb-4">مرحبا مجددا!</h5>
           <h6 class="text-lg pb-4">مرحبًا بعودتك</h6>
           <p class="text-lg text-text-gray pb-4">
@@ -22,14 +20,27 @@
           >
             <form>
               <div class="flex flex-col gap-2">
-                <InputsPhone
-                  :label="$t('FORMS.Placeholders.phoneNumber')"
-                  :placeholder="$t('FORMS.Placeholders.phoneNumber')"
-                  code-color="text-text"
-                  class="mb-2"
-                />
+                <div class="flex gap-2 items-center justify-between">
+                  <InputsSelect
+                    class="w-fit"
+                    :id="`phone_code`"
+                    name="phone_code"
+                    :options="[
+                      { name: 'Ksa', code: '966' },
+                      { name: 'UAE', code: '965' },
+                    ]"
+                    :placeholder="$t('FORMS.Placeholders.city')"
+                  />
+                  <InputsBase
+                    :label="$t('FORMS.Placeholders.phone')"
+                    :id="`phone`"
+                    :name="`phone`"
+                    :type="'text'"
+                    :placeholder="$t('FORMS.Placeholders.phone')"
+                  >
+                  </InputsBase>
+                </div>
               </div>
-
               <div class="mt-5">
                 <button
                   :disabled="btnLoading"
@@ -62,51 +73,30 @@
   </div>
 </template>
 
-
 <script setup>
 definePageMeta({
   layout: "auth",
 });
 
 const localePath = useLocalePath();
-const birthdate = ref("");
-// const emit = defineEmits(["close", "forget", "new-account"]);
 import * as yup from "yup";
 import { useToast, POSITION } from "vue-toastification";
 const toast = useToast();
 const config = useRuntimeConfig();
 const i18n = useI18n();
-const schema = yup.object({
-  password: yup.string().required(i18n.t("FORMS.Validation.password")),
-  cPassword: yup
-    .string()
-    .when("password", (password, field) =>
-      password
-        ? field
-            .required(i18n.t("FORMS.Validation.confirmPassword"))
-            .oneOf(
-              [yup.ref("password")],
-              i18n.t("FORMS.Validation.notEqualPasswords")
-            )
-        : field
-    ),
 
+const schema = yup.object({
   phone: yup.string().required(i18n.t("FORMS.Validation.phone")),
-  name: yup.string().required(i18n.t("FORMS.Validation.name")),
-  phone_code: yup.mixed().required(),
+  phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code")),
 });
 
-const phone_code = ref(null);
 const btnLoading = ref(false);
-const password = ref(true);
 function onSubmit(e, actions) {
   btnLoading.value = true;
-
   const SUBMITDATA = new FormData();
   SUBMITDATA.append("phone", e.phone);
-  SUBMITDATA.append("password", e.password);
-  SUBMITDATA.append("phone_code", e.phone_code);
-  $fetch("contact", {
+  SUBMITDATA.append("phone_code", e.phone_code.value);
+  $fetch("api/client_web/login", {
     method: "POST",
     body: SUBMITDATA,
     baseURL: config.public.baseURL,
@@ -125,7 +115,9 @@ function onSubmit(e, actions) {
             ? POSITION.BOTTOM_RIGHT
             : POSITION.BOTTOM_LEFT,
       });
-      emit("close");
+      useCookie("phone").value = e.phone;
+      useCookie("phone_code").value = e.phone_code.value;
+      navigateTo("/auth/verify");
     })
     .catch((err) => {
       btnLoading.value = false;

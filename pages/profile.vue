@@ -190,6 +190,9 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware:'auth'
+})
 const localePath = useLocalePath();
 const route = useRoute();
 

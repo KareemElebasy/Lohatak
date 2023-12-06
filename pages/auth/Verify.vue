@@ -10,43 +10,42 @@
           <p class="text-lg text-text-gray pb-4">
             لقد أرسلنا للتو رمز التحقق المكون من 4 أرقام إلى الرقم0000000 966+
             أدخل الرمز في المربع أدناه للمتابعة.
-            <VeeForm
-              @click.stop
-              as="div"
-              @submit="onVerify"
-              class="w-full max-w-[600px] px-8 pt-6 pb-8 mb-4 relative"
-            >
-              <form>
-                <div
-                  class="input_wrapper otp_inputs justify-between mx-auto"
-                  :class="
-                    !validation.valid && validation.touched ? 'error' : ''
-                  "
-                >
-                  <v-otp-input
-                    ref="otpInput"
-                    input-classes="otp-input"
-                    separator=" "
-                    v-model="verify_code"
-                    :num-inputs="4"
-                    :should-auto-focus="true"
-                    input-type="letter-numeric"
-                    @on-change="handleOnChange"
-                    @on-complete="handleOnComplete"
-                  />
-                  <p class="text-red-500 text-sm mb-0"></p>
-                </div>
-
-                <button
-                  type="submit"
-                  :disabled="!validation.valid || btnLoading"
-                  class="main_btn w-full mt-11 disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {{ $t("BUTTONS.confirm") }}
-                </button>
-              </form>
-            </VeeForm>
           </p>
+          <VeeForm
+            v-if="verify"
+            @click.stop
+            as="div"
+            @submit="onVerify"
+            class="w-full max-w-[600px] pt-6 pb-8 mb-4 relative"
+          >
+            <form>
+              <div
+                class="input_wrapper otp_inputs justify-between"
+                :class="!validation.valid && validation.touched ? 'error' : ''"
+              >
+                <v-otp-input
+                  ref="otpInput"
+                  input-classes="otp-input"
+                  separator="-"
+                  v-model="code"
+                  :num-inputs="4"
+                  :should-auto-focus="true"
+                  input-type="letter-numeric"
+                  @on-change="handleOnChange"
+                  @on-complete="handleOnComplete"
+                />
+                <p class="text-red-500 text-sm mb-0"></p>
+              </div>
+
+              <button
+                type="submit"
+                :disabled="!validation.valid || btnLoading"
+                class="main_btn w-full mt-11 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {{ $t("BUTTONS.confirm") }}
+              </button>
+            </form>
+          </VeeForm>
         </div>
       </div>
 
@@ -60,84 +59,69 @@
 <script setup>
 definePageMeta({
   layout: "auth",
+  middleware: "login",
 });
 import VOtpInput from "vue3-otp-input";
-import { useField } from "vee-validate";
-const verify = ref(true);
-const changePass = ref(false);
-
-const verify_code = ref("");
 import * as yup from "yup";
 import { useToast, POSITION } from "vue-toastification";
+
+const verify = ref(true);
+const code = ref("");
+const token = useCookie();
 const toast = useToast();
 const config = useRuntimeConfig();
 const i18n = useI18n();
 
 const schema = yup.object({
-  verify_code: yup.mixed().required(i18n.t("FORMS.Validation.verify")),
+  code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code")),
 });
 
 const btnLoading = ref(false);
 
-function onVerify() {
-  console.log(verify_code);
-  // btnLoading.value = true;
+function onVerify(e, actions) {
   verify.value = false;
-  changePass.value = true;
-  // emit("change-password");
-  // changePass.value = true;
+  const SUBMITDATA = new FormData();
 
-  // const SUBMITDATA = new FormData();
-  // SUBMITDATA.append("verify_code", e.verify_code);
+  SUBMITDATA.append("phone_code", useCookie("phone_code").value);
+  SUBMITDATA.append("phone", useCookie("phone").value);
+  SUBMITDATA.append("code", code.value);
+  SUBMITDATA.append("device_token", useCookie("device_token").value);
+  SUBMITDATA.append("type", "ios");
 
-  // $fetch("contact", {
-  //   method: "POST",
-  //   body: SUBMITDATA,
-  //   baseURL: config.public.baseURL,
-  //   headers: {
-  //     "Accept-Language": i18n.locale.value,
-  //   },
-  // })
-  //   .then((res) => {
-  //     btnLoading.value = false;
-
-  //     actions.resetForm();
-  //     toast.success(res.message, {
-  //       timeout: 2000,
-  //       position:
-  //         i18n.locale.value == "en"
-  //           ? POSITION.BOTTOM_RIGHT
-  //           : POSITION.BOTTOM_LEFT,
-  //     });
-  //     emit("close");
-  //   })
-  //   .catch((err) => {
-  //     btnLoading.value = false;
-  //     toast.error(err.response._data.message, {
-  //       timeout: 2000,
-  //       position:
-  //         i18n.locale.value == "en"
-  //           ? POSITION.BOTTOM_RIGHT
-  //           : POSITION.BOTTOM_LEFT,
-  //     });
-  //   });
+  $fetch("api/client_web/verify_Phone", {
+    method: "POST",
+    body: SUBMITDATA,
+    baseURL: config.public.baseURL,
+    headers: {
+      "Accept-Language": i18n.locale.value,
+    },
+  })
+    .then((res) => {
+      console.log(res.data.token);
+      btnLoading.value = false;
+      actions.resetForm();
+      toast.success(res.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+      useCookie("token").value = res.data.token;
+      navigateTo("/");
+    })
+    .catch((err) => {
+      btnLoading.value = false;
+      verify.value = true;
+      toast.error(err.response._data.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+    });
 }
-const schema2 = yup.object({
-  password: yup.string().required(i18n.t("FORMS.Validation.password")),
-  cPassword: yup
-    .string()
-    .when("password", (password, field) =>
-      password
-        ? field
-            .required(i18n.t("FORMS.Validation.confirmPassword"))
-            .oneOf(
-              [yup.ref("password")],
-              i18n.t("FORMS.Validation.notEqualPasswords")
-            )
-        : field
-    ),
-});
-
 const validation = reactive({
   valid: false,
   touched: false,
@@ -146,7 +130,7 @@ const validation = reactive({
 function handleOnComplete(event) {
   validation.touched = false;
   validation.valid = true;
-  verify_code.value = event;
+  code.value = event;
 }
 function handleOnChange() {
   validation.touched = true;
@@ -168,6 +152,7 @@ function handleOnChange() {
     }
   }
 }
+
 .otp-input {
   width: 40px;
   height: 40px;
@@ -183,6 +168,7 @@ function handleOnChange() {
     font-weight: 600;
   }
 }
+
 /* Background colour of an input field with value */
 .otp-input.is-complete {
   background-color: #e4e4e4;
