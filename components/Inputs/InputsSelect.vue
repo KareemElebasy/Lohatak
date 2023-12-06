@@ -12,9 +12,9 @@
         :selected="options[0]"
         :placeholder="placeholder"
         optionLabel="name"
-        optionValue="name"
+        optionValue="code"
         class="font-light border p-4 border-opacity-10 rounded-xl"
-        dataKey="name"
+        dataKey="code"
         v-model="currentValue"
       />
       <VeeErrorMessage
@@ -64,5 +64,8 @@ defineProps({
       @apply border-red-500;
     }
   }
+}
+.p-dropdown-items-wrapper {
+  @apply bg-white p-2 rounded-md text-center border border-b-primary;
 }
 </style>

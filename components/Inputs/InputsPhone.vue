@@ -107,8 +107,8 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 
 const phoneCode = useField("phone_code");
 
-console.log(phoneCode);
 // import Dropdown from "primevue/dropdown";
+
 defineProps({
   placeholder: {
     required: true,
@@ -131,46 +131,25 @@ defineProps({
 // const props = defineProps(["modelValue", "name", "label"]);
 // const emit = defineEmits(["code_change", "update:modelValue"]);
 
-// const value = computed({
-//   get() {
-//     return props.modelValue;
-//   },
-//   set(newValue) {
-//     emit("update:modelValue", newValue);
-//   },
-// });
+const countries = ref([
+  {
+    id: 1,
+    name: "Saudi Arabia",
+    image:
+      "https://phpv8.aait-d.com/leak_detection/public/storage/images/countries/CUcLmKYWTzsEbBQg8Ha7l7i3QiKBPy5HROu7gzWV.png",
+    phone_number_limit: 9,
+    phone_code: "966",
+  },
+]);
 
-const countries = ref([]);
 const country = ref(null);
 const config = useRuntimeConfig();
 const i18n = useI18n();
-
-const { data } = useAsyncData("countries", () => {
-  useFetch(
-    "https://phpv8.aait-d.com/leak_detection/public/api/general/countries",
-    {
-      method: "GET",
-      headers: {
-        "Accept-Language": i18n.locale.value,
-      },
-    }
-  ).then((res) => {
-    // console.log(res);
-    countries.value = res.data.value.data;
-
-    country.value = countries.value[0];
-    phoneCode.setValue(country.value);
-
-    // field.value = country.value;
-    // emit("code_change", country.value);
-  });
-});
 
 function updatePhoneCode(item) {
   country.value = item;
   phoneCode.setValue(item);
 }
-// onMounted(() => fetchData());
 </script>
 <style lang="scss">
 .help.is-danger {

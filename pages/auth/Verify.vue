@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full m-auto">
+  <div class="w-full">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div class="px-8">
         <nuxt-link class="block pb-4" :to="localePath('/')">
@@ -18,7 +18,7 @@
             >
               <form>
                 <div
-                  class="input_wrapper otp_inputs justify-between w-full mx-auto"
+                  class="input_wrapper otp_inputs justify-between mx-auto"
                   :class="
                     !validation.valid && validation.touched ? 'error' : ''
                   "
@@ -80,6 +80,7 @@ const schema = yup.object({
 const btnLoading = ref(false);
 
 function onVerify() {
+  console.log(verify_code);
   // btnLoading.value = true;
   verify.value = false;
   changePass.value = true;
@@ -166,5 +167,29 @@ function handleOnChange() {
       }
     }
   }
+}
+.otp-input {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  margin: 0 10px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  text-align: center;
+  input::placeholder {
+    font-size: 15px;
+    text-align: center;
+    font-weight: 600;
+  }
+}
+/* Background colour of an input field with value */
+.otp-input.is-complete {
+  background-color: #e4e4e4;
+}
+.otp-input::-webkit-inner-spin-button,
+.otp-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
