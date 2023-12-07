@@ -1,11 +1,9 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  const nuxt = useNuxtApp();
-  console.log(to);
   const token = useCookie("token");
-
   if (!token.value && to.fullPath === "/profile") {
     return navigateTo("/auth/login");
   }
+
 
   // if (token.value) {
   //   if (
@@ -17,6 +15,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   //   }
   // }
 
+  
   if (token.value && to.fullPath === "/auth/login") {
     return navigateTo("/");
   }

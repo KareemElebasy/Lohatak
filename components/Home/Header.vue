@@ -25,14 +25,16 @@
                 مستقبل <span class="text-white">استثماري</span>
               </h2>
               <p
-                class="text-white text-base md:text-start text-center font-medium mb-6"
+                class="text-white text-base md:text-start text-center font-medium md:mb-6 mb-9"
               >
                 تمتع بأفضل لوحات السيارات المتميزة التي تجعلك متميز امام الناس و
                 تمتع بالاستثمار و البيع و الشراء من خلال لوحتك التي تقدم لك
                 مميزات مثيرة .
               </p>
-
-              <nuxt-link :to="localePath('/search')" class="main_btn py-2 px-4">
+              <nuxt-link
+                :to="localePath('/search')"
+                class="main_btn py-2 px-4 block m-auto md:m-0 w-fit"
+              >
                 {{ $t("BUTTONS.discoverMore") }}
               </nuxt-link>
             </div>

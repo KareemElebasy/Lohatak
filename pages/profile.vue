@@ -199,6 +199,7 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
+
           <ModalsBasicGeneral
             v-if="showDelete"
             @close="showDelete = false"
@@ -214,10 +215,7 @@
         <NuxtPage />
       </div>
     </div>
-    <div>
-      p
-      {{ store.userInformation }}
-    </div>
+    <div></div>
   </div>
 </template>
 

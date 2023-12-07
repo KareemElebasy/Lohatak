@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div v-if="store" class="">
     <div class="bg-white rounded-lg">
       <VeeForm
         @click.stop
@@ -22,25 +22,58 @@
               :label="$t('FORMS.Placeholders.name')"
               id="name"
               name="name"
-              :placeholder="$t('FORMS.Placeholders.name')"
+              :placeholder="store?.userInformation?.username"
             />
-            <InputsPhone
-              :label="$t('FORMS.Placeholders.phoneNumber')"
-              :placeholder="$t('FORMS.Placeholders.phoneNumber')"
-              code-color="text-text"
-              class="mb-2"
-            />
-
-            <div
-              class="card flex justify-content-center font-light border p-4 border-opacity-10 rounded-xl"
-            >
-              <Calendar v-model="birthdate" showIcon iconDisplay="input" />
+            <div class="flex gap-2 items-center">
+              <InputsBase
+                :label="$t('FORMS.Placeholders.phone')"
+                :id="`phone`"
+                :name="`phone`"
+                :type="'text'"
+                :placeholder="store?.userInformation?.phone"
+              >
+              </InputsBase>
+              <InputsSelect
+                class="w-fit"
+                :id="`phone_code`"
+                name="phone_code"
+                :options="[
+                  { name: 'Ksa', code: '966' },
+                  { name: 'UAE', code: '965' },
+                ]"
+                :placeholder="$t('FORMS.Placeholders.city')"
+              />
             </div>
+
+            <div class="font-light border p-4 border-opacity-10 rounded-xl">
+              <VeeField
+                name="date_of_birth"
+                v-model="date_of_birth"
+                v-slot="{ field, meta }"
+              >
+                <div>
+                  <Calendar
+                    v-bind="field"
+                    showIcon
+                    dateFormat="dd-mm-yy"
+                    inputId="date_of_birth"
+                  />
+                </div>
+                <VeeErrorMessage
+                  v-if="!meta.valid && meta.touched"
+                  name="date_of_birth"
+                  as="div"
+                  class="error"
+                />
+              </VeeField>
+            </div>
+
             <InputsBase
               :label="$t('FORMS.Placeholders.userId')"
-              id="userId"
-              name="userId"
-              :placeholder="$t('FORMS.Placeholders.userId')"
+              :id="`ID_number`"
+              :name="`ID_number`"
+              :type="'text'"
+              :placeholder="store?.userInformation?.ID_number"
             />
             <div class="flex items-center justify-between">
               <InputsSelect
@@ -84,29 +117,55 @@
 <script setup>
 import * as yup from "yup";
 import { useToast, POSITION } from "vue-toastification";
+
 const localePath = useLocalePath();
 const toast = useToast();
+
 const config = useRuntimeConfig();
 const i18n = useI18n();
+
+
+// Fetch User Data
+import { useGlobalDataStore } from "../stores/globalData";
+
+const store = useGlobalDataStore();
+
+//Start Edit Profile
 const schema = yup.object({
   phone: yup.string().required(i18n.t("FORMS.Validation.phone")),
-  name: yup.string().required(i18n.t("FORMS.Validation.name")),
-  phone_code: yup.mixed().required(),
+  username: yup.string().required(i18n.t("FORMS.Validation.name")),
+  date_of_birth: yup
+    .string()
+    .required(i18n.t("FORMS.Validation.date_of_birth")),
+  phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code")),
+  ID_number: yup.string().required(i18n.t("FORMS.Validation.ID_number")),
+  gender: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
+  city: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
 });
 
 const birthdate = ref("");
 const phone_code = ref(null);
+const date_of_birth = ref(null);
+
 const btnLoading = ref(false);
 const password = ref(true);
 function onSubmit(e, actions) {
   btnLoading.value = true;
-
   const SUBMITDATA = new FormData();
+  const date_of_birth_formated = e.date_of_birth.toISOString().slice(0, 10);
+  console.log(e);
+  SUBMITDATA.append("username", e.username);
+  SUBMITDATA.append("phone_code", e.phone_code.value);
   SUBMITDATA.append("phone", e.phone);
-  SUBMITDATA.append("phone_code", e.phone_code);
-  $fetch("contact", {
-    method: "POST",
+  SUBMITDATA.append("gender", e.gender.value);
+  SUBMITDATA.append("city_id", e.city.value);
+  SUBMITDATA.append("ID_number", e.ID_number);
+  SUBMITDATA.append("date_of_birth", date_of_birth_formated);
+  SUBMITDATA.append("_method", "PUT");
+  console.log(SUBMITDATA);
+  $fetch("api/client_web/profile_edit", {
     body: SUBMITDATA,
+    method:'PUT',
     baseURL: config.public.baseURL,
     headers: {
       "Accept-Language": i18n.locale.value,
