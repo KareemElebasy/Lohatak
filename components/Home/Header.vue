@@ -1,24 +1,4 @@
 <template>
-  <!-- <div class="header h-[100vh]">
-    <div class="container pt-20 h-[100vh] flex items-center">
-      <div class="md:w-2/5">
-        <h2
-          class="text-primary md:text-start text-center font-bold text-5xl mb-6"
-        >
-          حاضر متميز <br />
-          مستقبل <span class="text-white">استثماري</span>
-        </h2>
-        <p class="text-white font-medium mb-6">
-          تمتع بأفضل لوحات السيارات المتميزة التي تجعلك متميز امام الناس و تمتع
-          بالاستثمار و البيع و الشراء من خلال لوحتك التي تقدم لك مميزات مثيرة .
-        </p>
-
-        <nuxt-link :to="localePath('/')" class="main_btn py-2 px-4">
-          {{ $t("BUTTONS.discoverMore") }}
-        </nuxt-link>
-      </div>
-    </div>
-  </div> -->
   <div class="" dir=" rtl">
     <Swiper
       :modules="[SwiperAutoplay, SwiperNavigation, SwiperPagination]"
@@ -34,7 +14,9 @@
           class="swiper-wraper bg-cover bg-no-repeat bg-center bg-fixed"
           :style="`background-image: url('https://i.postimg.cc/K8ZvJsLR/Rectangle-1.png');`"
         >
-          <div class="container h-[60vh] md:h-[100vh]  flex items-center">
+          <div
+            class="container h-[60vh] md:h-[100vh] flex flex-col justify-center"
+          >
             <div class="md:w-2/5">
               <h2
                 class="text-primary md:text-start text-center font-bold text-5xl mb-6"
@@ -42,7 +24,9 @@
                 حاضر متميز <br />
                 مستقبل <span class="text-white">استثماري</span>
               </h2>
-              <p class="text-white text-base font-medium mb-6">
+              <p
+                class="text-white text-base md:text-start text-center font-medium mb-6"
+              >
                 تمتع بأفضل لوحات السيارات المتميزة التي تجعلك متميز امام الناس و
                 تمتع بالاستثمار و البيع و الشراء من خلال لوحتك التي تقدم لك
                 مميزات مثيرة .

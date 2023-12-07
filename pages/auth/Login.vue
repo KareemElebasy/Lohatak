@@ -7,7 +7,7 @@
         </nuxt-link>
         <div class="w-full max-w-[600px] rounded-[25px] px-8 pt-6 pb-8">
           <h5 class="text-lg pb-4">مرحبا مجددا!</h5>
-          <h6 class="text-lg pb-4">مرحبًا بعودتك</h6>
+          <h6 class="text-2xl font-semibold pb-4">مرحبًا بعودتك</h6>
           <p class="text-lg text-text-gray pb-4">
             الرجاء إدخال عنوان البريد الإلكتروني الصحيح وكلمة المرور الخاصة بك
           </p>
@@ -16,11 +16,19 @@
             as="div"
             @submit="onSubmit"
             :validation-schema="schema"
-            class="w-full max-w-[600px] rounded-[25px] px-8 pt-6 pb-8 relative"
+            class="w-full max-w-[600px] pt-6"
           >
             <form>
               <div class="flex flex-col gap-2">
                 <div class="flex gap-2 items-center justify-between">
+                  <InputsBase
+                    :label="$t('FORMS.Placeholders.phone')"
+                    :id="`phone`"
+                    :name="`phone`"
+                    :type="'text'"
+                    :placeholder="$t('FORMS.Placeholders.phone')"
+                  >
+                  </InputsBase>
                   <InputsSelect
                     class="w-fit"
                     :id="`phone_code`"
@@ -31,26 +39,18 @@
                     ]"
                     :placeholder="$t('FORMS.Placeholders.city')"
                   />
-                  <InputsBase
-                    :label="$t('FORMS.Placeholders.phone')"
-                    :id="`phone`"
-                    :name="`phone`"
-                    :type="'text'"
-                    :placeholder="$t('FORMS.Placeholders.phone')"
-                  >
-                  </InputsBase>
                 </div>
               </div>
               <div class="mt-5">
                 <button
                   :disabled="btnLoading"
-                  class="main_btn w-full py-2 mb-2"
+                  class="main_btn w-full py-3 mb-4"
                   type="submit"
                 >
                   {{ $t("login") }}
                 </button>
 
-                <div class="text-center">
+                <div class="text-center text-sm font-semibold">
                   {{ $t("dontHaveAccount") }}
 
                   <nuxt-link

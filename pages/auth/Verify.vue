@@ -16,7 +16,7 @@
             @click.stop
             as="div"
             @submit="onVerify"
-            class="w-full max-w-[600px] pt-6 pb-8 mb-4 relative"
+            class="w-full max-w-[600px] pt-6 pb-8 mb-4"
           >
             <form>
               <div
@@ -40,7 +40,7 @@
               <button
                 type="submit"
                 :disabled="!validation.valid || btnLoading"
-                class="main_btn w-full mt-11 disabled:opacity-60 disabled:cursor-not-allowed"
+                class="main_btn w-full mt-11 py-3 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {{ $t("BUTTONS.confirm") }}
               </button>
@@ -64,7 +64,7 @@ definePageMeta({
 import VOtpInput from "vue3-otp-input";
 import * as yup from "yup";
 import { useToast, POSITION } from "vue-toastification";
-
+const localePath = useLocalePath();
 const verify = ref(true);
 const code = ref("");
 const token = useCookie();

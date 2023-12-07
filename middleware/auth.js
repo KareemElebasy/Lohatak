@@ -2,13 +2,29 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const nuxt = useNuxtApp();
   console.log(to);
   const token = useCookie("token");
-  if (!token.value && to.fullPath === nuxt.$localePath("/profile")) {
-    return navigateTo(nuxt.$localePath("/auth/login"));
+
+  if (!token.value && to.fullPath === "/profile") {
+    return navigateTo("/auth/login");
   }
-  if (!token.value && to.fullPath === nuxt.$localePath("/add-advertisement")) {
-    return navigateTo(nuxt.$localePath("/"));
+
+  // if (token.value) {
+  //   if (
+  //     to.fullPath === "/auth/login" ||
+  //     to.fullPath === "/auth/verify" ||
+  //     to.fullPath === "/auth/register"
+  //   ) {
+  //     navigateTo("/");
+  //   }
+  // }
+
+  if (token.value && to.fullPath === "/auth/login") {
+    return navigateTo("/");
   }
-  if (!token.value && to.fullPath === nuxt.$localePath("//auth/verify")) {
-    return navigateTo(nuxt.$localePath("/"));
+
+  if (token.value && to.fullPath === "/auth/verify") {
+    return navigateTo("/");
+  }
+  if (token.value && to.fullPath === "/auth/register") {
+    return navigateTo("/");
   }
 });

@@ -1,23 +1,22 @@
 <template>
-  <div class="w-full m-auto">
+  <div class="w-full mt-2">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div class="px-8">
-        <nuxt-link class="block pb-4" :to="localePath('/')">
+        <nuxt-link class="block pb-1" :to="localePath('/')">
           <img class="w-fit" src="~assets/images/logo1.svg" alt="" />
         </nuxt-link>
         <div class="w-full max-w-[600px] rounded-[25px] px-8 pt-6 pb-8">
-          <h5 class="text-lg pb-4">مرحبا بك!</h5>
-          <h6 class="text-lg pb-4">انشاء حساب</h6>
-          <p class="text-lg text-text-gray pb-4">
+          <h5 class="text-lg pb-2">مرحبا بك!</h5>
+          <h6 class="text-2xl font-semibold pb-2">انشاء حساب</h6>
+          <p class="text-base text-text-gray pb-2">
             الرجاء ادخال البيانات المطلوبة لأنشاء حساب جديد
           </p>
-          <h3 class="font-bold text-3xl pb-4">اجعل لوحتك تعبر عن شخصيتك</h3>
           <VeeForm
             @click.stop
             as="div"
             @submit="onSubmit"
             :validation-schema="schema"
-            class="w-full max-w-[600px] rounded-[25px] px-8 pt-6 pb-8 relative"
+            class="w-full max-w-[600px] rounded-[25px] pt-3"
           >
             <form>
               <div class="flex flex-col gap-2">
@@ -28,6 +27,14 @@
                   class="mb-2"
                 /> -->
                 <div class="flex gap-2 items-center">
+                  <InputsBase
+                    :label="$t('FORMS.Placeholders.phone')"
+                    :id="`phone`"
+                    :name="`phone`"
+                    :type="'text'"
+                    :placeholder="$t('FORMS.Placeholders.phone')"
+                  >
+                  </InputsBase>
                   <InputsSelect
                     class="w-fit"
                     :id="`phone_code`"
@@ -38,14 +45,6 @@
                     ]"
                     :placeholder="$t('FORMS.Placeholders.city')"
                   />
-                  <InputsBase
-                    :label="$t('FORMS.Placeholders.phone')"
-                    :id="`phone`"
-                    :name="`phone`"
-                    :type="'text'"
-                    :placeholder="$t('FORMS.Placeholders.phone')"
-                  >
-                  </InputsBase>
                 </div>
                 <InputsBase
                   :label="$t('FORMS.Placeholders.name')"
