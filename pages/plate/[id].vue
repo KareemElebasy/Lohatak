@@ -82,29 +82,60 @@
               ساري
             </p>
           </div>
-          <button class="main_btn w-full py-2 mb-2">شراء</button>
+          <button class="main_btn w-full py-2 mb-2" @click="openBuy = true">
+            شراء
+          </button>
           <div class="flex items-center justify-between gap-4 mb-2">
-            <button class="main_btn w-full py-2">تواصل</button>
+            <button class="main_btn w-full py-2" @click="openContact = true">
+              تواصل
+            </button>
             <button
+              @click="openReport = true"
               class="text-red-700 border w-full border-red-700 px-2 py-2 rounded-[.5rem]"
             >
               ابلاغ
             </button>
           </div>
+          <ModalsReport
+            v-if="openReport === true"
+            @close="openReport = false"
+          ></ModalsReport>
+          <ModalsContactSocial
+            v-if="openContact === true"
+            @close="openContact = false"
+          >
+          </ModalsContactSocial>
+          <ModalsSendRequest
+            v-if="openBuy === true"
+            @close="openBuy = false"
+            :mainHeading="`تم الارسال بنجاح`"
+            :message="`تم ارسال مشكلتك بنجاح وجاري مراجعتها من الادارة شكرا لك`"
+          ></ModalsSendRequest>
           <p>هل تريد حساب ضامن عن طريق التطبيق؟</p>
         </div>
       </div>
 
-      <div class="mt-1 grid grid-cols-1">
-        <h4 class="font-bold text-lg pb-2">تعليقك</h4>
-        <input
-          type="text"
-          class="border border-black rounded-md w-full min-h-[100px] mb-2"
-          name=""
-          id=""
-        />
-        <button class="main_btn px-2 py-1 w-fit">ارسال</button>
-      </div>
+      <VeeForm
+        @click.stop
+        as="div"
+        @submit="onSubmit"
+        :validation-schema="schema"
+        class="mt-1 grid grid-cols-1"
+      >
+        <form>
+          <h4 class="font-bold text-lg pb-2">تعليقك</h4>
+          <InputsBase
+            label="$t('FORMS.Placeholders.reportDesc')"
+            :id="`commentDesc`"
+            :name="`commentDesc`"
+            :type="'text'"
+            :placeholder="$t('FORMS.Placeholders.reportDesc')"
+          >
+          </InputsBase>
+        </form>
+
+        <button class="main_btn px-6 py-2 w-fit my-2 text-sm">ارسال</button>
+      </VeeForm>
 
       <h2 class="font-bold text-2xl py-4">التعليقات</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -136,11 +167,58 @@
 
 <script setup>
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import * as yup from "yup";
+const config = useRuntimeConfig();
+const i18n = useI18n();
 
+const openReport = ref(false);
+const openContact = ref(false);
+const openBuy = ref(false);
 const thumbsSwiper = ref(null);
 const setThumbsSwiper = (swiper) => {
   thumbsSwiper.value = swiper;
 };
+
+const schema = yup.object({
+  commentDesc: yup.string().required(i18n.t("FORMS.Validation.commentDesc")),
+});
+const btnLoading = ref(false);
+function onSubmit(e, actions) {
+  btnLoading.value = true;
+  const SUBMITDATA = new FormData();
+  SUBMITDATA.append("phone", e.phone);
+  SUBMITDATA.append("commentDesc", e.commentDesc);
+  $fetch("api/client_web/", {
+    method: "POST",
+    body: SUBMITDATA,
+    baseURL: config.public.baseURL,
+    headers: {
+      "Accept-Language": i18n.locale.value,
+    },
+  })
+    .then((res) => {
+      btnLoading.value = false;
+
+      actions.resetForm();
+      toast.success(res.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+    })
+    .catch((err) => {
+      btnLoading.value = false;
+      toast.error(err.response._data.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+    });
+}
 </script>
 
 <style lang="scss" scoped></style>

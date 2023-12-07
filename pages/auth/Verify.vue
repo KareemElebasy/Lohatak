@@ -59,7 +59,7 @@
 <script setup>
 definePageMeta({
   layout: "auth",
-  middleware: "login",
+  middleware: "auth",
 });
 import VOtpInput from "vue3-otp-input";
 import * as yup from "yup";

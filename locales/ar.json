@@ -34,7 +34,8 @@
     "bankaccount": "الحسابات البنكية  ",
     "shared": "مشاركة الموقع",
     "contact": "تواصل معنا ",
-    "logout": "تسجيل خروج"
+    "logout": "تسجيل خروج",
+    "delete": "حدف الحساب"
   },
   "SectionsDescription": {
     "haveQuestions": "هل لديك أسئلة",
@@ -118,7 +119,8 @@
       "yourEmail": "بريدك الالكتروني ",
       "yourPhone": " رقم الهاتف",
       "yourMessage": " أدخل رسالتك هنا ",
-      "postal_code": "الكود البريدي "
+      "postal_code": "الكود البريدي ",
+      "reportDesc": "اكتب هنا"
     },
     "Validation": {
       "validEmail": "البريد الالكتروني يجب ان يكون صحيحا",
@@ -128,6 +130,8 @@
       "gender": "النوع مطلوب",
       "phone_code": "كود البلد مطلوب",
       "city": "المدينة مطلوب",
+      "reportDesc": "وصف البلاغ مطلوب",
+      "commentDesc": "التعليق مطلوب",
       "ID_number": "رقم الهوية مطلوب",
       "date_of_birth": "تاريخ الميلاد مطلوب",
       "adsAddress": "العنوان مطلوب",

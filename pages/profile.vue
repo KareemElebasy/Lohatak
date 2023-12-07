@@ -26,8 +26,7 @@
       </button>
     </div>
     <div class="grid md:grid-cols-12 gap-5">
-      
-      <div class="hidden md:block col-span-4 mt-4 p-2" >
+      <div class="hidden md:block col-span-4 mt-4 p-2">
         <div class="pt-2 flex flex-col gap-2">
           <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
@@ -141,44 +140,73 @@
               <i
                 class="fa-solid fa-share-nodes bg-gray-400 text-white p-2 rounded-full"
               ></i>
-              <nuxt-link
-                :to="localePath('/profile/shared')"
-                class="text-small"
-                >{{ $t("PROFILE.shared") }}</nuxt-link
-              >
-            </div>
-            <i
-              class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
-            ></i>
-          </div>
-          <div class="flex justify-between isActive">
-            <div class="flex items-center gap-4 pb-4">
-              <i
-                class="fa-solid fa-phone-flip bg-gray-400 text-white p-2 rounded-full"
-              ></i>
-              <nuxt-link
-                :to="localePath('/profile/contact-us')"
-                class="text-small"
-                >{{ $t("PROFILE.contact") }}</nuxt-link
-              >
-            </div>
-            <i
-              class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
-            ></i>
-          </div>
-          <div class="flex justify-between isActive">
-            <div class="flex items-center gap-4 pb-4">
-              <i
-                class="fa-regular fa-user bg-gray-400 text-white p-1 rounded-full"
-              ></i>
-              <nuxt-link :to="localePath('/')" class="text-small">{{
-                $t("PROFILE.logout")
+              <nuxt-link @click="showSharedModal = true" class="text-small">{{
+                $t("PROFILE.shared")
               }}</nuxt-link>
             </div>
             <i
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
+          <ModalsSharedSocial
+            v-if="showSharedModal"
+            @close="showSharedModal = false"
+          ></ModalsSharedSocial>
+          <div class="flex justify-between isActive">
+            <div class="flex items-center gap-4 pb-4">
+              <i
+                class="fa-solid fa-phone-flip bg-gray-400 text-white p-2 rounded-full"
+              ></i>
+              <nuxt-link :to="localePath('/contact-us')" class="text-small">{{
+                $t("PROFILE.contact")
+              }}</nuxt-link>
+            </div>
+            <i
+              class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
+            ></i>
+          </div>
+          <div class="flex justify-between isActive text-red-500">
+            <div class="flex items-center gap-4 pb-4">
+              <i class="fa-regular fa-user text-red-500 p-1 rounded-full"></i>
+              <nuxt-link
+                @click="showLogout = true"
+                class="text-small text-red-500"
+                >{{ $t("PROFILE.logout") }}</nuxt-link
+              >
+            </div>
+            <i
+              class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
+            ></i>
+          </div>
+          <ModalsBasicGeneral
+            v-if="showLogout"
+            @close="showLogout = false"
+            :mainHeading="`تسجيل الخروج`"
+            :message="`هل أنت متأكد من تسجيل الخروج من الحساب؟`"
+            :confirmBtn="`تسجيل الخروج`"
+            :cancelBtn="`لا`"
+          ></ModalsBasicGeneral>
+          <div class="flex justify-between isActive text-red-500">
+            <div class="flex items-center gap-4 pb-4">
+              <i class="fa-regular fa-user text-red-500 p-1 rounded-full"></i>
+              <nuxt-link
+                @click="showDelete = true"
+                class="text-small text-red-500"
+                >{{ $t("PROFILE.delete") }}</nuxt-link
+              >
+            </div>
+            <i
+              class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
+            ></i>
+          </div>
+          <ModalsBasicGeneral
+            v-if="showDelete"
+            @close="showDelete = false"
+            :mainHeading="`حذف الحساب`"
+            :message="`هل أنت متأكد من أنه سيتم حذف الحساب الشخصي؟`"
+            :confirmBtn="`نعم احذف`"
+            :cancelBtn="`لا، احتفظ بها`"
+          ></ModalsBasicGeneral>
         </div>
       </div>
 
@@ -186,21 +214,37 @@
         <NuxtPage />
       </div>
     </div>
+    <div>
+      p
+      {{ store.userInformation }}
+    </div>
   </div>
 </template>
 
 <script setup>
-definePageMeta({
-  middleware:'auth'
-})
-const localePath = useLocalePath();
-const route = useRoute();
+import { useGlobalDataStore } from "../stores/globalData";
 
+definePageMeta({
+  middleware: "auth",
+});
+const localePath = useLocalePath();
+const store = useGlobalDataStore();
+// const { data } = useAsyncData(("userData", () => store.fetchUserData()));
+onMounted(() => {
+  console.log(store.fetchUserData());
+  console.log(store.userInformation);
+});
+const showSharedModal = ref(false);
+const showLogout = ref(false);
+const showDelete = ref(false);
+
+const route = useRoute();
 const showSidebar = ref(false);
 
 const toggleSideBar = () => {
   showSidebar.value = true;
 };
+
 watch(
   () => route.path,
   () => {

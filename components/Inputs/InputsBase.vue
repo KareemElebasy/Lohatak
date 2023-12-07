@@ -1,7 +1,7 @@
 <template>
   <VeeField :type="type" :name="name" v-slot="{ field, meta }">
     <div
-      class="input_wrapper"
+      class="input_wrapper w-full"
       :class="(!meta.valid && meta.touched ? 'error' : '', classes)"
     >
       <input

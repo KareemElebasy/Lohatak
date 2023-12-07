@@ -76,6 +76,7 @@
 <script setup>
 definePageMeta({
   layout: "auth",
+  middleware: "auth",
 });
 
 const localePath = useLocalePath();
@@ -117,7 +118,7 @@ function onSubmit(e, actions) {
       });
       useCookie("phone").value = e.phone;
       useCookie("phone_code").value = e.phone_code.value;
-      navigateTo("/auth/verify");
+      navigateTo("/auth/verify", { replace: false });
     })
     .catch((err) => {
       btnLoading.value = false;

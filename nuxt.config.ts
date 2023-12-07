@@ -102,7 +102,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseURL: "http://lohatk.phpv8.aait-d.com/public/",
+      baseURL: "https://lohatk.phpv8.aait-d.com/public/",
     },
   },
 });

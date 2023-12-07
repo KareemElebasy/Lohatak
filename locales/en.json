@@ -31,7 +31,8 @@
     "bankaccount": "Bank Account",
     "shared": "Location Shared",
     "contact": "Contact Us",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "delete": "Delete Account"
   },
   "Subtitle": {
     "blog": "Blog"
@@ -73,7 +74,7 @@
       "price": "Price",
       "detailsAds": "Advertisement Details (Optional)",
       "addressAds": "Advertisement Address",
-
+      "reportDesc": "Write Here",
       "nationality": "Nationality",
       "searchBlog": "Search Blog",
       "selectService": "Select Service",
@@ -113,6 +114,7 @@
       "ID_number": "National Id is required",
       "date_of_birth": "Date of Birth is required",
       "gender": "Gender is required",
+      "reportDesc" :"Report Description is Required",
       "emailWrong": "Email is wrong",
       "subject": "subject is required",
       "message": "Message is required",

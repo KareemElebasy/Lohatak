@@ -38,18 +38,12 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2 py-6">
-          <div
-            :class="`${
-              isFiltered
-                ? 'md:block hidden md:col-span-1'
-                : 'hidden md:col-span-1'
-            } `"
-          >
+          <div class="md:block hidden md:col-span-1">
             <GeneralFiltersCard />
           </div>
 
           <div class="md:col-span-3">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               <MyPlatesCard v-for="item in 8" />
             </div>
           </div>
@@ -61,7 +55,8 @@
 
 <script setup>
 const isActive = ref("all");
-const isFiltered = ref(true);
+
+const isOpen = ref(false);
 </script>
 
 <style lang="scss" scoped></style>

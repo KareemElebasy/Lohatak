@@ -27,7 +27,7 @@
                   code-color="text-text"
                   class="mb-2"
                 /> -->
-                <div class="flex gap-2 items-center justify-between">
+                <div class="flex gap-2 items-center">
                   <InputsSelect
                     class="w-fit"
                     :id="`phone_code`"
@@ -145,6 +145,7 @@
 <script setup>
 definePageMeta({
   layout: "auth",
+  middleware: "auth",
 });
 
 const localePath = useLocalePath();
@@ -160,7 +161,7 @@ const schema = yup.object({
   date_of_birth: yup
     .string()
     .required(i18n.t("FORMS.Validation.date_of_birth")),
-  phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code ")),
+  phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code")),
   ID_number: yup.string().required(i18n.t("FORMS.Validation.ID_number")),
   gender: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
   city: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
