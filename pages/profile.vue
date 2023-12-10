@@ -380,7 +380,6 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-
           <ModalsBasicGeneral
             v-if="showDelete"
             @close="showDelete = false"
@@ -391,6 +390,7 @@
           ></ModalsBasicGeneral>
         </div>
       </div>
+
       <div
         class="col-span-12 md:col-span-8 p-2 bg-gray wow animated zoomIn"
         data-wow-delay=".5s"
