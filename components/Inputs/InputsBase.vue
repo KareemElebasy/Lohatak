@@ -18,7 +18,6 @@
         "
         @change="emit('change', $event)"
       />
-
       <VeeErrorMessage
         v-if="!meta.valid && meta.touched"
         :name="name"

@@ -1,5 +1,5 @@
 <template>
-  <div class="footer py-6">
+  <div class="footer py-6 wow fadeInUp" data-wow-delay="0.2s">
     <div class="container text-white pt-8">
       <div class="grid grid-cols-1 md:grid-cols-4">
         <div class="md:col-span-1">

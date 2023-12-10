@@ -1,5 +1,8 @@
 <template>
-  <div class="plateCard p-4 bg-white flex flex-col rounded-lg min-w-[230px]">
+  <nuxt-link
+    :to="localePath(`/plate/1`)"
+    class="plateCard p-4 bg-white flex flex-col rounded-lg min-w-[230px]"
+  >
     <div class="flex items-center justify-between pb-4">
       <button class="text-primary">تم البيع</button>
       <button>
@@ -37,9 +40,11 @@
         {{ $t("BUTTONS.edit") }}
       </button>
     </div>
-  </div>
+  </nuxt-link>
 </template>
 
-<script setup></script>
+<script setup>
+const localePath = useLocalePath();
+</script>
 
 <style lang="scss" scoped></style>

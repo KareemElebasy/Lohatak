@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full">
+  <div class="w-full wow animate fadeInLeftBig" data-wow-delay=".2">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div class="px-8">
+      <div class="px-8 wow animate bounceIn" data-wow-delay=".2s">
         <nuxt-link class="block pb-4" :to="localePath('/')">
           <img class="w-fit" src="~assets/images/logo1.svg" alt="" />
         </nuxt-link>
@@ -50,7 +50,12 @@
       </div>
 
       <div class="m-auto">
-        <img src="~assets/images/bg-login.svg" alt="" />
+        <img
+          class="wow animate fadeInLeftBig"
+          data-wow-delay=".5s"
+          src="~assets/images/bg-login.svg"
+          alt=""
+        />
       </div>
     </div>
   </div>

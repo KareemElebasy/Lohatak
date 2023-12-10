@@ -3,11 +3,11 @@
     <Swiper
       :modules="[SwiperAutoplay, SwiperNavigation, SwiperPagination]"
       :slides-per-view="1"
+      :navigation="false"
       :autoplay="{
         delay: 5000,
         disableOnInteraction: true,
       }"
-      :navigation="false"
     >
       <SwiperSlide v-for="item in 3">
         <div
@@ -17,7 +17,11 @@
           <div
             class="container h-[60vh] md:h-[100vh] flex flex-col justify-center"
           >
-            <div class="md:w-2/5">
+            <div
+              class="md:w-2/5 animated zoomIn"
+              data-wow-duration=".5s"
+              data-wow-delay=".1s"
+            >
               <h2
                 class="text-primary md:text-start text-center font-bold text-5xl mb-6"
               >

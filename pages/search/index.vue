@@ -43,7 +43,7 @@
           </div>
           <div class="md:col-span-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-              <Card v-for="item in 6" />
+              <GeneralCard v-for="item in 6" />
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store" class="">
+  <div v-if="store" class="wow animated zoomIn" data-wow-delay=".5s">
     <div class="bg-white rounded-lg">
       <VeeForm
         @click.stop
@@ -124,7 +124,6 @@ const toast = useToast();
 const config = useRuntimeConfig();
 const i18n = useI18n();
 
-
 // Fetch User Data
 import { useGlobalDataStore } from "../stores/globalData";
 
@@ -165,7 +164,7 @@ function onSubmit(e, actions) {
   console.log(SUBMITDATA);
   $fetch("api/client_web/profile_edit", {
     body: SUBMITDATA,
-    method:'PUT',
+    method: "PUT",
     baseURL: config.public.baseURL,
     headers: {
       "Accept-Language": i18n.locale.value,

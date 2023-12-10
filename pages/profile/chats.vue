@@ -1,13 +1,9 @@
 <template>
-    <div>
-        <h2>Chats</h2>
-    </div>
+  <div class="wow animated zoomIn" data-wow-delay=".5s">
+    <h2>Chats</h2>
+  </div>
 </template>
 
-<script setup>
+<script setup></script>
 
-</script>
-
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

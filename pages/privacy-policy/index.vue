@@ -6,7 +6,7 @@
     />
   </div>
   <div class="container">
-    <div class="p-6">
+    <div class="p-6 wow animate fadeIn" data-wow-delay=".2s">
       <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
         المقدمة
       </h4>
@@ -48,7 +48,7 @@
         بلانديت تينسيدونت أورنا ماجنا.
       </p>
     </div>
-    <div class="p-6">
+    <div class="p-6 wow animate fadeIn" data-wow-delay=".2s">
       <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
         تعريف
       </h4>
@@ -59,7 +59,7 @@
         commentisse donec elit عدد صحيح.
       </p>
     </div>
-    <div class="p-6">
+    <div class="p-6 wow animate fadeIn" data-wow-delay=".2s">
       <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
         شروط الاستخدم
       </h4>

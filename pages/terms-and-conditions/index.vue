@@ -6,7 +6,7 @@
     />
   </div>
   <div class="container">
-    <div class="p-6">
+    <div class="p-6 wow animate fadeIn" data-wow-delay=".1s">
       <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
         شروط الاستخدام
       </h4>
@@ -38,7 +38,7 @@
         الخدمات.
       </p>
     </div>
-    <div class="p-6">
+    <div class="p-6 wow animate fadeIn" data-wow-delay=".2s">
       <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
         شروط الاستخدام لوحتك
       </h4>
@@ -70,7 +70,7 @@
         الخدمات.
       </p>
     </div>
-    <div class="p-6">
+    <div class="p-6 wow animate fadeIn" data-wow-delay=".3s">
       <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
         قواعد لمستخدمي لوحتك
       </h4>

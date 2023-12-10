@@ -1,8 +1,8 @@
 <template>
   <div
-    class="header-sec min-h-[20rem] flex flex-col items-center justify-center"
+    class="header-sec min-h-[20rem] flex flex-col items-center justify-center "
   >
-    <div class="w-4/5 md:w-1/3 text-white text-center pt-8">
+    <div class="w-4/5 md:w-1/3 text-white text-center pt-8 wow animated zoomIn" data-wow-delay=".3s">
       <h2 class="font-bold text-3xl pb-4">{{ title }}</h2>
       <p class="text-base">{{ desc }}</p>
     </div>

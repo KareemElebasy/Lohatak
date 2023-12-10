@@ -6,7 +6,11 @@ export default defineNuxtConfig({
     // Start:: Head Configurations //
     head: {
       title: "Lohatak",
-
+      script: [
+        {
+          src: "/wow.js",
+        },
+      ],
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -25,8 +29,10 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: "~/assets/style/tailwind.css",
   },
+  css: ["~/assets/style/animation/animate.css"],
   modules: [
     "@nuxtjs/tailwindcss",
+    // "@formkit/auto-animate/nuxt",
     "nuxt-swiper",
     [
       "nuxt-primevue",
@@ -36,7 +42,14 @@ export default defineNuxtConfig({
             ripple: true,
           },
           components: {
-            include: ["Button", "Calendar", "Dialog"],
+            include: [
+              "Button",
+              "Calendar",
+              "Dialog",
+              "Dropdown",
+              "MenuButton",
+              "Menu",
+            ],
           },
         },
       },
@@ -100,6 +113,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vue-toastification"],
   },
+
   runtimeConfig: {
     public: {
       baseURL: "https://lohatk.phpv8.aait-d.com/public/",

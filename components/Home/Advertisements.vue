@@ -1,7 +1,7 @@
 <template>
   <div class="ads-section p-3">
     <div class="container">
-      <div class="text-white text-center my-8">
+      <div class="text-white text-center my-8 wow fadeIn" data-wow-delay="0.4s">
         <h2 class="text-3xl font-bold pb-2">الإعلانات</h2>
         <p class="text-base">تابع افضل العروض والإعلانات</p>
       </div>
@@ -30,11 +30,33 @@
         }"
         :pagination="true"
       >
-        <swiper-slide><img src="~assets/images/ads-small.svg" /></swiper-slide
-        ><swiper-slide><img src="~assets/images/ads-large.svg" /></swiper-slide
-        ><swiper-slide><img src="~assets/images/ads-large.svg" /></swiper-slide
-        ><swiper-slide><img src="~assets/images/ads-large.svg" /></swiper-slide>
-        ><swiper-slide><img src="~assets/images/ads-large.svg" /></swiper-slide>
+        <swiper-slide
+          ><img
+            class="wow zoomIn"
+            data-wow-delay=".6s"
+            src="~assets/images/ads-small.svg" /></swiper-slide
+        ><swiper-slide
+          ><img
+            class="wow zoomIn"
+            data-wow-delay=".6s"
+            src="~assets/images/ads-large.svg" /></swiper-slide
+        ><swiper-slide
+          ><img
+            class="wow zoomIn"
+            data-wow-delay=".6s"
+            src="~assets/images/ads-large.svg" /></swiper-slide
+        ><swiper-slide
+          ><img
+            class="wow zoomIn"
+            data-wow-delay=".6s"
+            src="~assets/images/ads-large.svg"
+        /></swiper-slide>
+        ><swiper-slide
+          ><img
+            class="wow zoomIn"
+            data-wow-delay=".6s"
+            src="~assets/images/ads-large.svg"
+        /></swiper-slide>
       </Swiper>
     </div>
   </div>

@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full m-auto">
+  <div class="w-full m-auto wow animate fadeInLeftBig" data-wow-delay=".2">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div class="px-8">
-        <nuxt-link class="block pb-4" :to="localePath('/')">
+      <div class="px-8 wow animate bounceIn" data-wow-delay=".2s">
+        <nuxt-link class="block w-fit pb-4" :to="localePath('/')">
           <img class="w-fit" src="~assets/images/logo1.svg" alt="" />
         </nuxt-link>
         <div class="w-full max-w-[600px] rounded-[25px] px-8 pt-6 pb-8">
@@ -29,7 +29,44 @@
                     :placeholder="$t('FORMS.Placeholders.phone')"
                   >
                   </InputsBase>
-                  <InputsSelect
+                  <div>
+                    <VeeField
+                      type="text"
+                      name="phone_code"
+                      v-slot="{ meta, field }"
+                    >
+                      <div>
+                        <Dropdown
+                          v-bind="field"
+                          :options="countriess"
+                          :selected="countriess[0]"
+                          optionLabel="name"
+                          optionValue="phone_code"
+                          class="font-light border p-4 border-opacity-10 rounded-xl"
+                          dataKey="phone_code"
+                          placeholder="966+"
+                        >
+                          <template #option="slotProps">
+                            <div class="flex items-center gap-1">
+                              <img
+                                :alt="slotProps.option.label"
+                                :src="slotProps.option.image"
+                                class="w-10"
+                              />
+                              <div>+({{ slotProps.option.phone_code }})</div>
+                            </div>
+                          </template>
+                        </Dropdown>
+                        <VeeErrorMessage
+                          v-if="!meta.valid && meta.touched"
+                          name="phone_code"
+                          as="div"
+                          class="text-red-500 text-sm"
+                        />
+                      </div>
+                    </VeeField>
+                  </div>
+                  <!-- <InputsSelect
                     class="w-fit"
                     :id="`phone_code`"
                     name="phone_code"
@@ -38,7 +75,7 @@
                       { name: 'UAE', code: '965' },
                     ]"
                     :placeholder="$t('FORMS.Placeholders.city')"
-                  />
+                  /> -->
                 </div>
               </div>
               <div class="mt-5">
@@ -67,7 +104,12 @@
       </div>
 
       <div class="m-auto">
-        <img src="~assets/images/bg-login.svg" alt="" />
+        <img
+          class="w-full object-cover wow animate fadeInLeftBig"
+          data-wow-delay=".5s"
+          src="~assets/images/bg-login.svg"
+          alt=""
+        />
       </div>
     </div>
   </div>
@@ -78,6 +120,18 @@ definePageMeta({
   layout: "auth",
   middleware: "auth",
 });
+
+const selectedCountry = ref();
+const countriess = ref([
+  {
+    id: 1,
+    name: "Saudi Arabia",
+    image:
+      "https://phpv8.aait-d.com/leak_detection/public/storage/images/countries/CUcLmKYWTzsEbBQg8Ha7l7i3QiKBPy5HROu7gzWV.png",
+    phone_number_limit: 9,
+    phone_code: "966",
+  },
+]);
 
 const localePath = useLocalePath();
 import * as yup from "yup";
@@ -90,9 +144,11 @@ const schema = yup.object({
   phone: yup.string().required(i18n.t("FORMS.Validation.phone")),
   phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code")),
 });
-
+const phone_code = ref(null);
 const btnLoading = ref(false);
 function onSubmit(e, actions) {
+  console.log(e);
+  console.log(phone_code);
   btnLoading.value = true;
   const SUBMITDATA = new FormData();
   SUBMITDATA.append("phone", e.phone);
@@ -118,7 +174,7 @@ function onSubmit(e, actions) {
       });
       useCookie("phone").value = e.phone;
       useCookie("phone_code").value = e.phone_code.value;
-      navigateTo("/auth/verify", { replace: false });
+      navigateTo("/auth/verify", { replace: true });
     })
     .catch((err) => {
       btnLoading.value = false;

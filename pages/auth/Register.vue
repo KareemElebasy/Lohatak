@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full mt-2">
+  <div class="w-full mt-2 wow animate fadeInLeftBig" data-wow-delay=".2">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <div class="px-8">
+      <div class="px-8 wow animate bounceIn" data-wow-delay=".2s">
         <nuxt-link class="block pb-1" :to="localePath('/')">
           <img class="w-fit" src="~assets/images/logo1.svg" alt="" />
         </nuxt-link>
@@ -35,16 +35,43 @@
                     :placeholder="$t('FORMS.Placeholders.phone')"
                   >
                   </InputsBase>
-                  <InputsSelect
-                    class="w-fit"
-                    :id="`phone_code`"
-                    name="phone_code"
-                    :options="[
-                      { name: 'Ksa', code: '966' },
-                      { name: 'UAE', code: '965' },
-                    ]"
-                    :placeholder="$t('FORMS.Placeholders.city')"
-                  />
+                  <div>
+                    <VeeField
+                      type="text"
+                      name="phone_code"
+                      v-slot="{ meta, field }"
+                    >
+                      <div>
+                        <Dropdown
+                          v-bind="field"
+                          :options="countriess"
+                          :selected="countriess[0]"
+                          optionLabel="name"
+                          optionValue="phone_code"
+                          class="font-light border p-4 border-opacity-10 rounded-xl"
+                          dataKey="phone_code"
+                          placeholder="966+"
+                        >
+                          <template #option="slotProps">
+                            <div class="flex items-center gap-1">
+                              <img
+                                :alt="slotProps.option.label"
+                                :src="slotProps.option.image"
+                                class="w-10"
+                              />
+                              <div>+({{ slotProps.option.phone_code }})</div>
+                            </div>
+                          </template>
+                        </Dropdown>
+                        <VeeErrorMessage
+                          v-if="!meta.valid && meta.touched"
+                          name="phone_code"
+                          as="div"
+                          class="text-red-500 text-sm"
+                        />
+                      </div>
+                    </VeeField>
+                  </div>
                 </div>
                 <InputsBase
                   :label="$t('FORMS.Placeholders.name')"
@@ -79,6 +106,7 @@
                 <div>
                   <!-- <Calendar v-model="date_of_birth" dateFormat="dd/mm/yy" /> -->
                 </div>
+
                 <InputsBase
                   :label="$t('FORMS.Placeholders.userId')"
                   :id="`ID_number`"
@@ -86,6 +114,7 @@
                   :type="'text'"
                   :placeholder="$t('FORMS.Placeholders.userId')"
                 />
+
                 <div class="flex items-center justify-between">
                   <InputsSelect
                     class="w-fit"
@@ -135,7 +164,12 @@
       </div>
 
       <div class="m-auto">
-        <img src="~assets/images/bg-login.svg" alt="" />
+        <img
+          class="wow animate fadeInLeftBig"
+          data-wow-delay=".5s"
+          src="~assets/images/bg-login.svg"
+          alt=""
+        />
       </div>
     </div>
   </div>
@@ -165,6 +199,17 @@ const schema = yup.object({
   gender: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
   city: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
 });
+
+const countriess = ref([
+  {
+    id: 1,
+    name: "Saudi Arabia",
+    image:
+      "https://phpv8.aait-d.com/leak_detection/public/storage/images/countries/CUcLmKYWTzsEbBQg8Ha7l7i3QiKBPy5HROu7gzWV.png",
+    phone_number_limit: 9,
+    phone_code: "966",
+  },
+]);
 
 const phone_code = ref(null);
 const date_of_birth = ref(null);

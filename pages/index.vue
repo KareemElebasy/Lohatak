@@ -1,6 +1,7 @@
 <template>
   <div>
     <HomeHeader />
+    <!-- <HomeAnimated /> -->
     <HomePlatesTypes />
     <HomeAdvertisements />
     <HomeExpressionOfPersonality />

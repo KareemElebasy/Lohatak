@@ -1,7 +1,13 @@
 <template>
-  <div class="bg-gradient-to-l from-gray-100 to-gray-50">
+  <div
+    class="bg-gradient-to-l from-gray-100 to-gray-50 wow fadeInUp"
+    data-wow-delay="0.1s"
+  >
     <div class="container pt-12 pb-12">
-      <div class="text-center md:w-1/2 mx-auto">
+      <div
+        class="text-center md:w-1/2 mx-auto wow fadeInUp"
+        data-wow-delay="0.1s"
+      >
         <h2 class="text-black font-bold text-2xl pb-2">اللوحات</h2>
         <p class="text-text-gray">
           تمتع بأفضل لوحات السيارات المتميزة التي تجعلك متميز امام الناس و تمتع
@@ -40,7 +46,11 @@
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
         >
-          <GeneralCard v-for="item in 6" />
+          <GeneralCard
+            class="wow zoomIn"
+            data-wow-delay="0.6s"
+            v-for="item in 6"
+          />
         </div>
       </div>
     </div>
@@ -48,26 +58,7 @@
 </template>
 
 <script setup>
-import { useToast, POSITION } from "vue-toastification";
-const toast = useToast();
-const i18n = useI18n();
 const isActive = ref("all");
-
-const showModal = ref(false);
-
-const openToast = () => {
-  toast.success("Added", {
-    timeout: 2000,
-    position:
-      i18n.locale.value == "en" ? POSITION.BOTTOM_RIGHT : POSITION.BOTTOM_LEFT,
-  });
-};
-const openModal = () => {
-  showModal.value = true;
-};
-const closeModal = () => {
-  showModal.value = false;
-};
 </script>
 
 <style lang="scss"></style>

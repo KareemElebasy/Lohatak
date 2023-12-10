@@ -3,8 +3,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (!token.value && to.fullPath === "/profile") {
     return navigateTo("/auth/login");
   }
-
-
   // if (token.value) {
   //   if (
   //     to.fullPath === "/auth/login" ||
@@ -14,8 +12,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
   //     navigateTo("/");
   //   }
   // }
-
-  
   if (token.value && to.fullPath === "/auth/login") {
     return navigateTo("/");
   }
