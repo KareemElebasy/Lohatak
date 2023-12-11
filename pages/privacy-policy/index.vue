@@ -6,11 +6,14 @@
     />
   </div>
   <div class="container">
-    <div class="p-6 wow animate fadeIn" data-wow-delay=".2s">
-      <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
+    <div class="p-6">
+      <h4
+        class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md wow animate fadeIn"
+        data-wow-delay=".2s"
+      >
         المقدمة
       </h4>
-      <p class="text-text-gray py-4">
+      <p class="text-text-gray py-4 wow animate fadeIn" data-wow-delay=".4s">
         Iaculis euismod هو مقولة euismod الجلوس على القول المأثور, neque. ,يترتب
         على ذلك fusce laoreet Accumsan، الدهليز. ,Turpis sed eu tortor Massa
         pellentesque lectus tortor viverra sed. ,Nulla dignissim quis dolor nunc
@@ -21,7 +24,7 @@
         Malesuada molestie. ,Ante Elementum Massa Pretium، Sit Arcu. ,بورتا
         بلانديت تينسيدونت أورنا ماجنا.
       </p>
-      <p class="text-text-gray py-4">
+      <p class="text-text-gray py-4 wow animate fadeIn" data-wow-delay=".6s">
         Orci، ونفس الحمل يولدان خطرًا. ,Nunc velit quam pellentesque viverra.
         ,Feugiat mi Purus ornare vitae aliquet cras Tellus velit sociis. ,أخبرنا
         في البداية. ,Duis morbi lorem nibh amet، mus urna، Purus velit. ,Mi
@@ -36,7 +39,7 @@
         الذاتية للاتحاد الأوروبي ultrices adipiscing comdo. ,Interdum vivamus
         enim ut diam nisl.
       </p>
-      <p class="text-text-gray py-4">
+      <p class="text-text-gray py-4 wow animate fadeIn" data-wow-delay=".8s">
         Iaculis euismod هو مقولة euismod الجلوس على القول المأثور, neque. ,يترتب
         على ذلك fusce laoreet Accumsan، الدهليز. ,Turpis sed eu tortor Massa
         pellentesque lectus tortor viverra sed. ,Nulla dignissim quis dolor nunc
@@ -48,22 +51,28 @@
         بلانديت تينسيدونت أورنا ماجنا.
       </p>
     </div>
-    <div class="p-6 wow animate fadeIn" data-wow-delay=".2s">
-      <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
+    <div class="p-6">
+      <h4
+        class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md wow animate fadeIn"
+        data-wow-delay=".2s"
+      >
         تعريف
       </h4>
-      <p class="text-text-gray py-4">
+      <p class="text-text-gray py-4 wow animate fadeIn" data-wow-delay=".5s">
         يضيء القوس دائمًا ولا ينبعث منه سوى الحياة. ,Pharetra، nascetur الجلوس
         turpis feugiat الدهليز semper orci. ,لاكوس بريتيوم في تريستيك. ,Eget
         mollis nam eu, sem mattis hangingsse ac. ,Dictum ultrices dolor
         commentisse donec elit عدد صحيح.
       </p>
     </div>
-    <div class="p-6 wow animate fadeIn" data-wow-delay=".2s">
-      <h4 class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md">
+    <div class="p-6">
+      <h4
+        class="text-primary bg-gray-100 px-4 text-base py-2 w-fit rounded-md wow animate fadeIn"
+        data-wow-delay=".4s"
+      >
         شروط الاستخدم
       </h4>
-      <p class="text-text-gray py-4">
+      <p class="text-text-gray py-4 wow animate fadeIn" data-wow-delay=".8s">
         Tellus consectetur sed et cras nec gravida الجلوس. ,Ut euismod egestas
         amet vel viverra lectus id id arcu. ,Ultrices في magna id tincidunt
         luctus amet. ,Porttitor pulvinar integer integer justo, eget amet, vitae

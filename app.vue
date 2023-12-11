@@ -6,7 +6,7 @@
 
 <script>
 if (process.client) {
-  const wow = await new window.WOW();
-  await wow.init();
+  const wow =  new window.WOW();
+   wow.init();
 }
 </script>

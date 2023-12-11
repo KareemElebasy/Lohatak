@@ -12,7 +12,7 @@
 
       <div class="m-auto p-4 wow zoomIn" data-wow-delay="0.6s">
         <h3 class="font-bold text-3xl pb-4">اجعل لوحتك تعبر عن شخصيتك</h3>
-        <p class="text-text-gray text-base pb-4 w-2/3">
+        <p class="text-text-gray text-base pb-4 md:w-2/3">
           هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
           النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من
           النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.إذا كنت

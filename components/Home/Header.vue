@@ -1,5 +1,5 @@
 <template>
-  <div class="" dir=" rtl">
+  <div class="" dir=" rtl" v-if="slider">
     <Swiper
       :modules="[SwiperAutoplay, SwiperNavigation, SwiperPagination]"
       :slides-per-view="1"
@@ -9,10 +9,10 @@
         disableOnInteraction: true,
       }"
     >
-      <SwiperSlide v-for="item in 3">
+      <SwiperSlide v-for="item in slider" :key="item.id">
         <div
           class="swiper-wraper bg-cover bg-no-repeat bg-center bg-fixed"
-          :style="`background-image: url('https://i.postimg.cc/K8ZvJsLR/Rectangle-1.png');`"
+          :style="`background-image: url(${item.image});`"
         >
           <div
             class="container h-[60vh] md:h-[100vh] flex flex-col justify-center"
@@ -49,15 +49,16 @@
 </template>
 
 <script setup>
+const props = defineProps(["slider"]);
 const localePath = useLocalePath();
 </script>
 
 <style lang="scss" scoped>
-.header .swiper-wraper {
-  background-image: url("../../assets/images/bg-header.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-}
+// .header .swiper-wraper {
+//   background-image: url("../../assets/images/bg-header.svg");
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-attachment: fixed;
+//   background-position: center;
+// }
 </style>

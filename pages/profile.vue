@@ -349,11 +349,9 @@
           <div class="flex justify-between isActive text-red-500">
             <div class="flex items-center gap-4 pb-4">
               <i class="fa-regular fa-user text-red-500 p-1 rounded-full"></i>
-              <nuxt-link
-                @click="showLogout = true"
-                class="text-small text-red-500"
-                >{{ $t("PROFILE.logout") }}</nuxt-link
-              >
+              <nuxt-link @click="logOut" class="text-small text-red-500">{{
+                $t("PROFILE.logout")
+              }}</nuxt-link>
             </div>
             <i
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
@@ -404,13 +402,15 @@
 
 <script setup>
 import { useGlobalDataStore } from "../stores/globalData";
-
+import { useToast, POSITION } from "vue-toastification";
 definePageMeta({
   middleware: "auth",
 });
 const localePath = useLocalePath();
+const config = useRuntimeConfig();
+const i18n = useI18n();
+const toast = useToast();
 const store = useGlobalDataStore();
-// const { data } = useAsyncData(("userData", () => store.fetchUserData()));
 onMounted(() => {
   console.log(store.fetchUserData());
   console.log(store.userInformation);
@@ -432,6 +432,45 @@ watch(
     toggleSideBar();
   }
 );
+
+// LogOut Function
+function logOut() {
+  $fetch("api/client_web/logout", {
+    method: "POST",
+    body: {
+      device_token: `${useCookie("device_token").value}`,
+      type: "ios",
+    },
+    baseURL: config.public.baseURL,
+    headers: {
+      "Accept-Language": i18n.locale.value,
+      Authorization: `Bearer ${useCookie("token").value}`,
+    },
+  })
+    .then((res) => {
+      toast.success(res.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+      useCookie("phone").value = null;
+      useCookie("device_token").value = null;
+      useCookie("phone_code").value = null;
+      useCookie("token").value = null;
+      navigateTo("/", { replace: true });
+    })
+    .catch((err) => {
+      toast.error(err.response._data.message, {
+        timeout: 2000,
+        position:
+          i18n.locale.value == "en"
+            ? POSITION.BOTTOM_RIGHT
+            : POSITION.BOTTOM_LEFT,
+      });
+    });
+}
 </script>
 
 <style lang="scss">

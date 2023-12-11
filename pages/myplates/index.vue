@@ -38,13 +38,20 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2 py-6">
-          <div class="md:block hidden md:col-span-1">
+          <div
+            class="md:block hidden md:col-span-1 wow zoomIn"
+            data-wow-delay=".5s"
+          >
             <GeneralFiltersCard />
           </div>
 
           <div class="md:col-span-3">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-              <MyPlatesCard v-for="item in 8" />
+              <MyPlatesCard
+                v-for="item in 8"
+                class="wow zoomIn"
+                data-wow-delay="0.6s"
+              />
             </div>
           </div>
         </div>
