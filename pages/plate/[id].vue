@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gradient-to-l from-gray-100 to-gray-50">
+  <div class="bg-gradient-to-l from-gray-100 to-gray-50" v-if="itemDetails">
     <GeneralTitleHeader
       :title="'تفاصيل اللوحة'"
       :desc="`جميع البيانات التي تخص اللوحة`"
@@ -17,15 +17,18 @@
             :spaceBetween="10"
             :thumbs="{ swiper: thumbsSwiper }"
             :modules="[FreeMode, Navigation, Thumbs]"
-            class=""
+            class="min-h-3/4"
           >
-            <swiper-slide v-for="item in 3" key="itemImg.id"
+            <swiper-slide
+              v-for="(item, i) in itemDetails.data.images"
+              :key="item.i"
+              class="h-full"
               ><img
-                src="https://gomechanic.in/blog/wp-content/uploads/2019/05/typesofcarnumberplates-02-01.jpg"
-                class="rounded-xl"
+                :src="item"
+                class="rounded-xl w-full"
+                @error="setErrorImg($event)"
             /></swiper-slide>
           </swiper>
-
           <swiper
             @swiper="setThumbsSwiper"
             :spaceBetween="10"
@@ -34,18 +37,18 @@
             :watchSlidesProgress="true"
             :modules="[FreeMode, Navigation, Thumbs]"
             class="mySwiper mt-4 flex flex-col"
-            ><swiper-slide v-for="item in 3" key="itemImg.id"
-              ><img
-                class="rounded-lg object-fill w-full h-full"
-                src="https://gomechanic.in/blog/wp-content/uploads/2019/05/typesofcarnumberplates-02-01.jpg"
+            ><swiper-slide
+              v-for="(item, i) in itemDetails.data.images"
+              :key="item.i"
+              ><img :src="item" class="rounded-xl" @error="setErrorImg($event)"
             /></swiper-slide>
           </swiper>
         </div>
 
         <div>
           <div class="flex items-center justify-between pb-4 mb-2">
-            <h3 class="font-mediam text-lg">لوحة مميزه ثنائي مكرر</h3>
-            <p class="text-primary">#97187</p>
+            <h3 class="font-mediam text-lg">{{ itemDetails.data.title }}</h3>
+            <p class="text-primary">#{{ itemDetails.data.id }}</p>
           </div>
 
           <div
@@ -55,16 +58,16 @@
               <img src="~assets/images/profilepic.svg" alt="" />
               <div class="text-sm">
                 <h6>اسم البائع</h6>
-                <h5>Kareem</h5>
+                <h5>{{ itemDetails.data.user.username }}</h5>
               </div>
             </div>
             <button>
               <i class="fa-solid fa-location-dot text-primary mx-1"></i>
-              <span class="text-sm">الرياض</span>
+              <span class="text-sm">{{ itemDetails.data.user.city.name }}</span>
             </button>
             <button>
               <i class="fa-regular fa-calendar-days text-primary mx-1"></i>
-              <span class="text-sm"> منذ 3 ايام </span>
+              <span class="text-sm"> {{ itemDetails.data.created_at }} </span>
             </button>
           </div>
 
@@ -72,45 +75,56 @@
             class="flex items-center justify-between pb-4 font-bold text-sm bg-gradient-to-l from-gray-100 to-gray-50 p-2 rounded-md mb-2"
           >
             <h3 class="font-mediam text-lg">سعر اللوحة</h3>
-            <p class="">80,000 ر.س</p>
+            <p class="">{{ itemDetails.data.price }} ر س</p>
           </div>
           <div
             class="flex items-center justify-between pb-4 text-sm bg-gradient-to-l from-gray-100 to-gray-50 p-2 rounded-md mb-2"
           >
             <h3 class="font-mediam text-lg">حالة تقرير الفحص الدوري</h3>
             <p class="text-primary bg-gray-300 opacity-30 px-2 py-1 rounded-md">
-              ساري
+              {{ itemDetails.data.car_inspection_status }}
             </p>
           </div>
-          <button class="main_btn w-full py-2 mb-2" @click="openBuy = true">
+
+          <button
+            class="main_btn w-full py-2 mb-2"
+            @click="openBuy = true"
+            v-if="itemDetails.data.buying_button"
+          >
             شراء
           </button>
+          <Teleport to="body">
+            <ModalsSendRequest
+              v-if="openBuy === true"
+              @close="openBuy = false"
+              :mainHeading="`تم الارسال بنجاح`"
+              :message="`تم ارسال مشكلتك بنجاح وجاري مراجعتها من الادارة شكرا لك`"
+            ></ModalsSendRequest>
+          </Teleport>
           <div class="flex items-center justify-between gap-4 mb-2">
             <button class="main_btn w-full py-2" @click="openContact = true">
               تواصل
             </button>
+            <Teleport to="body">
+              <ModalsContactSocial
+                v-if="openContact === true"
+                @close="openContact = false"
+              >
+              </ModalsContactSocial>
+            </Teleport>
             <button
               @click="openReport = true"
               class="text-red-700 border w-full border-red-700 px-2 py-2 rounded-[.5rem]"
             >
               ابلاغ
             </button>
+            <Teleport to="body">
+              <ModalsReport
+                v-if="openReport === true"
+                @close="openReport = false"
+              ></ModalsReport>
+            </Teleport>
           </div>
-          <ModalsReport
-            v-if="openReport === true"
-            @close="openReport = false"
-          ></ModalsReport>
-          <ModalsContactSocial
-            v-if="openContact === true"
-            @close="openContact = false"
-          >
-          </ModalsContactSocial>
-          <ModalsSendRequest
-            v-if="openBuy === true"
-            @close="openBuy = false"
-            :mainHeading="`تم الارسال بنجاح`"
-            :message="`تم ارسال مشكلتك بنجاح وجاري مراجعتها من الادارة شكرا لك`"
-          ></ModalsSendRequest>
           <p>هل تريد حساب ضامن عن طريق التطبيق؟</p>
         </div>
       </div>
@@ -156,11 +170,11 @@
         <p class="text-text-gray">بعض اللوحات التي تشابه طلبك</p>
       </div>
 
-      <div
+      <!-- <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
       >
         <GeneralCard v-for="item in 6" class="mx-auto" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -178,7 +192,19 @@ const thumbsSwiper = ref(null);
 const setThumbsSwiper = (swiper) => {
   thumbsSwiper.value = swiper;
 };
+// Fetch Plate Details
+const { id } = useRoute().params;
+const { data: itemDetails } = useAsyncData("itemDetails", () =>
+  $fetch(`${config.public.baseURL}api/client_web/advertisement/${id}`, {
+    headers: {
+      "Accept-Language": i18n.locale.value,
+      Authorization: `Bearer ${useCookie("token").value}`,
+    },
+  })
+);
 
+console.log(itemDetails);
+// Sent Comment Desc
 const schema = yup.object({
   commentDesc: yup.string().required(i18n.t("FORMS.Validation.commentDesc")),
 });
@@ -218,6 +244,12 @@ function onSubmit(e, actions) {
             : POSITION.BOTTOM_LEFT,
       });
     });
+}
+
+// setErrorImg
+function setErrorImg(e) {
+  // e.target.src = "/plateCard.svg";
+  e.target.src = new URL(`~/assets/images/plateCard.svg`, import.meta.url).href;
 }
 </script>
 

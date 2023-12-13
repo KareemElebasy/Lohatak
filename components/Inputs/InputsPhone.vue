@@ -69,7 +69,7 @@
           </MenuItems>
         </transition>
       </Menu>
-
+      
       <VeeErrorMessage
         v-if="!meta.valid && meta.touched"
         name="phone_code"

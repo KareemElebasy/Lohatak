@@ -114,6 +114,12 @@
 <script setup>
 const priceSort = ref(null);
 const timeSort = ref(null);
+
+const filterOptions = ref({
+  sorted_by: [],
+  "sub_category_ids[0]": [],
+  "category_ids[0]": [],
+});
 </script>
 
 <style lang="scss" scoped>

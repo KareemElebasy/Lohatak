@@ -20,59 +20,13 @@
           >
             <form>
               <div class="flex flex-col gap-2">
-                <!-- <InputsPhone
+                <InputsInputPhone
                   :label="$t('FORMS.Placeholders.phoneNumber')"
                   :placeholder="$t('FORMS.Placeholders.phoneNumber')"
                   code-color="text-text"
                   class="mb-2"
-                /> -->
-                <div class="flex gap-2 items-center">
-                  <InputsBase
-                    :label="$t('FORMS.Placeholders.phone')"
-                    :id="`phone`"
-                    :name="`phone`"
-                    :type="'text'"
-                    :placeholder="$t('FORMS.Placeholders.phone')"
-                  >
-                  </InputsBase>
-                  <div>
-                    <VeeField
-                      type="text"
-                      name="phone_code"
-                      v-slot="{ meta, field }"
-                    >
-                      <div>
-                        <Dropdown
-                          v-bind="field"
-                          :options="countriess"
-                          :selected="countriess[0]"
-                          optionLabel="name"
-                          optionValue="phone_code"
-                          class="font-light border p-4 border-opacity-10 rounded-xl"
-                          dataKey="phone_code"
-                          placeholder="966+"
-                        >
-                          <template #option="slotProps">
-                            <div class="flex items-center gap-1">
-                              <img
-                                :alt="slotProps.option.label"
-                                :src="slotProps.option.image"
-                                class="w-10"
-                              />
-                              <div>+({{ slotProps.option.phone_code }})</div>
-                            </div>
-                          </template>
-                        </Dropdown>
-                        <VeeErrorMessage
-                          v-if="!meta.valid && meta.touched"
-                          name="phone_code"
-                          as="div"
-                          class="text-red-500 text-sm"
-                        />
-                      </div>
-                    </VeeField>
-                  </div>
-                </div>
+                >
+                </InputsInputPhone>
                 <InputsBase
                   :label="$t('FORMS.Placeholders.name')"
                   :id="`username`"
@@ -80,31 +34,26 @@
                   :type="'text'"
                   :placeholder="$t('FORMS.Placeholders.name')"
                 />
-                {{ date_of_birth }}
-                <div class="font-light border p-4 border-opacity-10 rounded-xl">
+                <div>
                   <VeeField
                     name="date_of_birth"
                     v-model="date_of_birth"
                     v-slot="{ field, meta }"
                   >
-                    <div>
-                      <Calendar
-                        v-bind="field"
-                        showIcon
-                        dateFormat="dd-mm-yy"
-                        inputId="date_of_birth"
-                      />
+                    <div class="font-light border border-opacity-10 rounded-xl">
+                      <VueDatePicker v-bind="field" v-model="date_of_birth">
+                        <template #clock-icon>
+                          <img class="slot-icon" src="/logo1.svg" />
+                        </template>
+                      </VueDatePicker>
                     </div>
                     <VeeErrorMessage
                       v-if="!meta.valid && meta.touched"
                       name="date_of_birth"
                       as="div"
-                      class="error"
+                      class="text-red-500 text-sm mb-2"
                     />
                   </VeeField>
-                </div>
-                <div>
-                  <!-- <Calendar v-model="date_of_birth" dateFormat="dd/mm/yy" /> -->
                 </div>
 
                 <InputsBase
@@ -126,16 +75,15 @@
                     ]"
                     :placeholder="$t('FORMS.Placeholders.gender')"
                   />
-                  <InputsSelect
-                    class="w-fit"
-                    :id="`city`"
-                    name="city"
-                    :options="[
-                      { name: 'Geddah', code: '1' },
-                      { name: 'Makkah', code: '2' },
-                    ]"
+                  <InputsCity
+                    :label="$t('FORMS.Placeholders.city')"
                     :placeholder="$t('FORMS.Placeholders.city')"
-                  />
+                    code-color="text-text"
+                    class="mb-2"
+                    :id="`city_id`"
+                    :name="`city_id`"
+                  >
+                  </InputsCity>
                 </div>
               </div>
 
@@ -176,14 +124,21 @@
 </template>
 
 <script setup>
+import * as yup from "yup";
+import { useToast, POSITION } from "vue-toastification";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import { useField } from "vee-validate";
+
+const phone_code = useField("phone_code");
+const city_id = useField("city_id");
+
 definePageMeta({
   layout: "auth",
   middleware: "auth",
 });
 
 const localePath = useLocalePath();
-import * as yup from "yup";
-import { useToast, POSITION } from "vue-toastification";
 const toast = useToast();
 const config = useRuntimeConfig();
 const i18n = useI18n();
@@ -197,34 +152,21 @@ const schema = yup.object({
   phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code")),
   ID_number: yup.string().required(i18n.t("FORMS.Validation.ID_number")),
   gender: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
-  city: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
+  city_id: yup.mixed().required(i18n.t("FORMS.Validation.gender")),
 });
 
-const countriess = ref([
-  {
-    id: 1,
-    name: "Saudi Arabia",
-    image:
-      "https://phpv8.aait-d.com/leak_detection/public/storage/images/countries/CUcLmKYWTzsEbBQg8Ha7l7i3QiKBPy5HROu7gzWV.png",
-    phone_number_limit: 9,
-    phone_code: "966",
-  },
-]);
-
-const phone_code = ref(null);
 const date_of_birth = ref(null);
-
 const btnLoading = ref(false);
+
 function onSubmit(e, actions) {
   btnLoading.value = true;
   const SUBMITDATA = new FormData();
   const date_of_birth_formated = e.date_of_birth.toISOString().slice(0, 10);
-  console.log(e);
   SUBMITDATA.append("username", e.username);
-  SUBMITDATA.append("phone_code", e.phone_code.value);
+  SUBMITDATA.append("phone_code", e.phone_code);
   SUBMITDATA.append("phone", e.phone);
   SUBMITDATA.append("gender", e.gender.value);
-  SUBMITDATA.append("city_id", e.city.value);
+  SUBMITDATA.append("city_id", e.city_id);
   SUBMITDATA.append("ID_number", e.ID_number);
   SUBMITDATA.append("date_of_birth", date_of_birth_formated);
   console.log(SUBMITDATA);
@@ -247,7 +189,7 @@ function onSubmit(e, actions) {
             : POSITION.BOTTOM_LEFT,
       });
       useCookie("phone").value = e.phone;
-      useCookie("phone_code").value = e.phone_code.value;
+      useCookie("phone_code").value = e.phone_code;
 
       navigateTo("/auth/verify");
     })
@@ -270,5 +212,10 @@ function onSubmit(e, actions) {
 
 .p-datepicker {
   @apply bg-white p-5 rounded-md;
+}
+
+.slot-icon {
+  height: 20px;
+  width: auto;
 }
 </style>

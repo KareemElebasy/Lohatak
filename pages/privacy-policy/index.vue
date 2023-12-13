@@ -87,6 +87,21 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const config = useRuntimeConfig();
+const i18n = useI18n();
+
+const { data: privacy } = await useFetch(
+  `${config.public.baseURL}api/general/privacy`,
+  {
+    headers: {
+      "Accept-Language": i18n.locale.value,
+    },
+    params: {
+      type: "privacy-policy",
+    },
+  }
+);
+</script>
 
 <style lang="scss" scoped></style>

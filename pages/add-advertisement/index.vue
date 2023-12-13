@@ -5,12 +5,7 @@
       :desc="`قم بإضافة اعلانك الجديد عبر الخطوات التالية `"
     />
     <div class="container">
-      <VeeForm
-        @click.stop
-        as="div"
-        @submit="onSubmit"
-        :validation-schema="schema"
-      >
+      <VeeForm @click.stop as="div" @submit="onSubmit">
         <form>
           <div class="mx-auto w-fit text-center my-6">
             <h4 class="text-black text-xl font-medium pb-2">نوع التسجيل</h4>
@@ -18,59 +13,56 @@
               حدد نوع تسجيل اللوحة التي ترغب في اضافتها للإعلان
             </p>
             <div class="flex items-center justify-center flex-wrap gap-4">
-              <div class="plate-types">
+              <div
+                class="plate-types"
+                v-for="item in categories.data"
+                :key="item.id"
+              >
                 <input
-                  id="special"
+                  :id="item.type"
                   type="radio"
-                  value="special"
-                  name="special"
+                  :value="item.type"
+                  name="categoryType"
                   class="hidden"
-                  v-model="categoryType"
-                />
-                <label for="special">
-                  <div class="flex gap-2 items-center">
-                    <p> خصوصي</p>
-                    <img src="~assets/images/cartype.svg" />
-                  </div>
-                </label>
-              </div>
-              <div class="plate-types">
-                <input
-                  id="special-type"
-                  type="radio"
-                  value="special-type"
-                  name="special-type"
-                  class="hidden"
-                  v-model="categoryType"
                 />
 
-                <label for="special-type">
+                <label
+                  :for="item.type"
+                  @click="
+                    () => {
+                      handleSubBar(item.sub_categories);
+                    }
+                  "
+                >
                   <div class="flex gap-2 items-center min-h-[3rem]">
-                    <p> نقل خاص</p>
-                    <img src="~assets/images/specialtype.svg" />
-                  </div>
-                </label>
-              </div>
-              <div class="plate-types">
-                <input
-                  id="moto-type"
-                  type="radio"
-                  value="moto-type"
-                  name="moto-type"
-                  class="hidden"
-                  v-model="categoryType"
-                />
-
-                <label for="moto-type">
-                  <div class="flex gap-2 items-center min-h-[3rem]">
-                    <p> دراجات نارية</p>
-                    <img src="~assets/images/mototype.svg" />
+                    <p> {{ item.title }}</p>
+                    <img :src="item.image" />
                   </div>
                 </label>
               </div>
             </div>
+            <div
+              v-if="sub_categories"
+              class="flex flex-wrap gap-2 items-center justify-center py-1"
+            >
+              <div
+                v-for="subItem in sub_categories"
+                :key="subItem.id"
+                class="plate-types"
+              >
+                <input
+                  :id="subItem.type"
+                  type="radio"
+                  :value="subItem.type"
+                  name="subCategoryType"
+                  class="hidden"
+                />
+                <label :for="subItem.type" class="min-h-[3rem] pt-8">
+                  <p class="pt-1">{{ subItem.title }}</p>
+                </label>
+              </div>
+            </div>
           </div>
-
           <div class="mb-6">
             <div class="w-fit mx-auto text-center mb-6">
               <h4 class="text-black text-xl font-medium pb-2">
@@ -375,66 +367,83 @@ const localePath = useLocalePath();
 
 import * as yup from "yup";
 import { useToast, POSITION } from "vue-toastification";
-const toast = useToast();
 const config = useRuntimeConfig();
 const i18n = useI18n();
+//Get categories
+const { data: categories } = await useAsyncData("categories", () =>
+  $fetch(`${config.public.baseURL}api/client_web/category`, {
+    headers: {
+      "Accept-Language": i18n.locale.value,
+    },
+  })
+);
+const sub_categories = ref(null);
+const handleSubBar = (categories) => {
+  console.log(categories);
+  sub_categories.value = categories;
+};
+const toast = useToast();
 
 const schema = yup.object({
   price: yup.string().required(i18n.t("FORMS.Validation.price")),
   adsAddress: yup.string().required(i18n.t("FORMS.Validation.adsAddress")),
 });
 const categoryType = ref("");
+const subCategoryType = ref("");
 const isExpired = ref("");
 const showPhone = ref("");
 const showComment = ref("");
 const adsType = ref("");
 const btnLoading = ref(false);
-
-const price = ref(null);
-const adsAddress = ref(null);
-
-function onSubmit(e, actions) {
-  btnLoading.value = true;
-
-  const SUBMITDATA = new FormData();
-  SUBMITDATA.append("price", e.price);
-  SUBMITDATA.append("adsAddress", e.adsAddress);
-  $fetch("contact", {
-    method: "POST",
-    body: SUBMITDATA,
-    baseURL: config.public.baseURL,
-    headers: {
-      "Accept-Language": i18n.locale.value,
-    },
-  })
-    .then((res) => {
-      btnLoading.value = false;
-      actions.resetForm();
-      toast.success(res.message, {
-        timeout: 2000,
-        position:
-          i18n.locale.value == "en"
-            ? POSITION.BOTTOM_RIGHT
-            : POSITION.BOTTOM_LEFT,
-      });
-    })
-    .catch((err) => {
-      btnLoading.value = false;
-      toast.error(err.response._data.message, {
-        timeout: 2000,
-        position:
-          i18n.locale.value == "en"
-            ? POSITION.BOTTOM_RIGHT
-            : POSITION.BOTTOM_LEFT,
-      });
-    });
-}
-
 const firstLetter = ref("");
 const firstLetterData = ref([
   { name: "Dد", code: "d" },
   { name: "Mم", code: "m" },
 ]);
+const price = ref(null);
+const adsAddress = ref(null);
+
+function onSubmit(e, actions) {
+  console.log(e);
+  const SUBMITDATA = new FormData();
+  SUBMITDATA.append("category_type", e.categoryType);
+  SUBMITDATA.append("category_type", e.subCategoryType);
+
+  console.log();
+  // btnLoading.value = true;
+
+  // SUBMITDATA.append("adsAddress", e.adsAddress);
+  // $fetch("api/client_web/advertisement", {
+  //   method: "POST",
+  //   body: SUBMITDATA,
+  //   baseURL: config.public.baseURL,
+  //   headers: {
+  //     "Accept-Language": i18n.locale.value,
+  //     Authorization: `Bearer ${useCookie("token").value}`,
+  //   },
+  // })
+  //   .then((res) => {
+  //     btnLoading.value = false;
+  //     actions.resetForm();
+  //     toast.success(res.message, {
+  //       timeout: 2000,
+  //       position:
+  //         i18n.locale.value == "en"
+  //           ? POSITION.BOTTOM_RIGHT
+  //           : POSITION.BOTTOM_LEFT,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     btnLoading.value = false;
+  //     toast.error(err.response._data.message, {
+  //       timeout: 2000,
+  //       position:
+  //         i18n.locale.value == "en"
+  //           ? POSITION.BOTTOM_RIGHT
+  //           : POSITION.BOTTOM_LEFT,
+  //     });
+  //   });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -463,6 +472,7 @@ const firstLetterData = ref([
       }
     }
   }
+
   // input [type="radio"] {
   //   @apply accent-black
   // }

@@ -329,10 +329,12 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <ModalsSharedSocial
-            v-if="showSharedModal"
-            @close="showSharedModal = false"
-          ></ModalsSharedSocial>
+          <Teleport to="body">
+            <ModalsSharedSocial
+              v-if="showSharedModal"
+              @close="showSharedModal = false"
+            ></ModalsSharedSocial>
+          </Teleport>
           <div class="flex justify-between isActive">
             <div class="flex items-center gap-4 pb-4">
               <i
@@ -349,22 +351,27 @@
           <div class="flex justify-between isActive text-red-500">
             <div class="flex items-center gap-4 pb-4">
               <i class="fa-regular fa-user text-red-500 p-1 rounded-full"></i>
-              <nuxt-link @click="logOut" class="text-small text-red-500">{{
-                $t("PROFILE.logout")
-              }}</nuxt-link>
+              <nuxt-link
+                @click="showLogout = true"
+                class="text-small text-red-500"
+                >{{ $t("PROFILE.logout") }}</nuxt-link
+              >
             </div>
             <i
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <ModalsBasicGeneral
-            v-if="showLogout"
-            @close="showLogout = false"
-            :mainHeading="`تسجيل الخروج`"
-            :message="`هل أنت متأكد من تسجيل الخروج من الحساب؟`"
-            :confirmBtn="`تسجيل الخروج`"
-            :cancelBtn="`لا`"
-          ></ModalsBasicGeneral>
+          <Teleport to="body">
+            <ModalsBasicGeneral
+              v-if="showLogout"
+              @close="showLogout = false"
+              @confirm="logOut"
+              :mainHeading="`تسجيل الخروج`"
+              :message="`هل أنت متأكد من تسجيل الخروج من الحساب؟`"
+              :confirmBtn="`تسجيل الخروج`"
+              :cancelBtn="`لا`"
+            ></ModalsBasicGeneral>
+          </Teleport>
           <div class="flex justify-between isActive text-red-500">
             <div class="flex items-center gap-4 pb-4">
               <i class="fa-regular fa-user text-red-500 p-1 rounded-full"></i>
@@ -378,14 +385,16 @@
               class="fa-solid fa-chevron-left taxt-lg text-gray-400 p-1 rounded-full"
             ></i>
           </div>
-          <ModalsBasicGeneral
-            v-if="showDelete"
-            @close="showDelete = false"
-            :mainHeading="`حذف الحساب`"
-            :message="`هل أنت متأكد من أنه سيتم حذف الحساب الشخصي؟`"
-            :confirmBtn="`نعم احذف`"
-            :cancelBtn="`لا، احتفظ بها`"
-          ></ModalsBasicGeneral>
+          <Teleport to="body">
+            <ModalsBasicGeneral
+              v-if="showDelete"
+              @close="showDelete = false"
+              :mainHeading="`حذف الحساب`"
+              :message="`هل أنت متأكد من أنه سيتم حذف الحساب الشخصي؟`"
+              :confirmBtn="`نعم احذف`"
+              :cancelBtn="`لا، احتفظ بها`"
+            ></ModalsBasicGeneral>
+          </Teleport>
         </div>
       </div>
 
@@ -448,6 +457,7 @@ function logOut() {
     },
   })
     .then((res) => {
+      console.log(res);
       toast.success(res.message, {
         timeout: 2000,
         position:

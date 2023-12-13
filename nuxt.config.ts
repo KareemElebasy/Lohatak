@@ -111,7 +111,7 @@ export default defineNuxtConfig({
   ],
   plugins: ["~/plugins/vue-toastification.client", "~/plugins/i18n.client.ts"],
   build: {
-    transpile: ["vue-toastification"],
+    transpile: ["vue-toastification", "@vuepic/vue-datepicker"],
   },
 
   runtimeConfig: {

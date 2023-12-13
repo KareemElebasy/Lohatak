@@ -20,8 +20,8 @@
           >
             <form>
               <div class="flex flex-col gap-2">
-                <div class="flex gap-2 items-center justify-between">
-                  <InputsBase
+                <div>
+                  <!-- <InputsBase
                     :label="$t('FORMS.Placeholders.phone')"
                     :id="`phone`"
                     :name="`phone`"
@@ -65,17 +65,14 @@
                         />
                       </div>
                     </VeeField>
-                  </div>
-                  <!-- <InputsSelect
-                    class="w-fit"
-                    :id="`phone_code`"
-                    name="phone_code"
-                    :options="[
-                      { name: 'Ksa', code: '966' },
-                      { name: 'UAE', code: '965' },
-                    ]"
-                    :placeholder="$t('FORMS.Placeholders.city')"
-                  /> -->
+                  </div> -->
+                  <InputsInputPhone
+                    :label="$t('FORMS.Placeholders.phoneNumber')"
+                    :placeholder="$t('FORMS.Placeholders.phoneNumber')"
+                    code-color="text-text"
+                    class="mb-2"
+                  >
+                  </InputsInputPhone>
                 </div>
               </div>
               <div class="mt-5">
@@ -121,21 +118,11 @@ definePageMeta({
   middleware: "auth",
 });
 
-const selectedCountry = ref();
-const countriess = ref([
-  {
-    id: 1,
-    name: "Saudi Arabia",
-    image:
-      "https://phpv8.aait-d.com/leak_detection/public/storage/images/countries/CUcLmKYWTzsEbBQg8Ha7l7i3QiKBPy5HROu7gzWV.png",
-    phone_number_limit: 9,
-    phone_code: "966",
-  },
-]);
-
 const localePath = useLocalePath();
 import * as yup from "yup";
 import { useToast, POSITION } from "vue-toastification";
+import { useField } from "vee-validate";
+
 const toast = useToast();
 const config = useRuntimeConfig();
 const i18n = useI18n();
@@ -144,15 +131,17 @@ const schema = yup.object({
   phone: yup.string().required(i18n.t("FORMS.Validation.phone")),
   phone_code: yup.mixed().required(i18n.t("FORMS.Validation.phone_code")),
 });
-const phone_code = ref(null);
+
+const phone_code = useField("phone_code");
+
 const btnLoading = ref(false);
 function onSubmit(e, actions) {
   console.log(e);
-  console.log(phone_code);
   btnLoading.value = true;
   const SUBMITDATA = new FormData();
   SUBMITDATA.append("phone", e.phone);
-  SUBMITDATA.append("phone_code", e.phone_code.value);
+  SUBMITDATA.append("phone_code", e.phone_code);
+
   $fetch("api/client_web/login", {
     method: "POST",
     body: SUBMITDATA,
@@ -172,8 +161,8 @@ function onSubmit(e, actions) {
             ? POSITION.BOTTOM_RIGHT
             : POSITION.BOTTOM_LEFT,
       });
-      useCookie("phone").value = e.phone;
-      useCookie("phone_code").value = e.phone_code.value;
+      useCookie("phone").value = res.data.phone;
+      useCookie("phone_code").value = e.phone_code;
       navigateTo("/auth/verify", { replace: true });
     })
     .catch((err) => {

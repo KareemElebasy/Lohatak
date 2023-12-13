@@ -16,7 +16,7 @@
         }
       "
     />
-    <HomeAdvertisements />
+    <HomeAdvertisements :ads="ads" />
     <HomeExpressionOfPersonality />
     <HomeBlogsSection />
     <HomeAppDownload />

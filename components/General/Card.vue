@@ -1,6 +1,6 @@
 <template>
   <nuxt-link
-    :to="localePath(`/plate/1`)"
+    :to="localePath(`/plate/${item.id}`)"
     class="plateCard p-4 bg-white flex flex-col rounded-lg min-w-[230px]"
   >
     <div class="flex items-center justify-between pb-4">

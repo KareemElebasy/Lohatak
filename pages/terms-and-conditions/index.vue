@@ -85,4 +85,19 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const config = useRuntimeConfig();
+const i18n = useI18n();
+
+const { data: terms } = await useFetch(
+  `${config.public.baseURL}api/general/term`,
+  {
+    headers: {
+      "Accept-Language": i18n.locale.value,
+    },
+    params: {
+      type: "terms-conditions",
+    },
+  }
+);
+</script>
